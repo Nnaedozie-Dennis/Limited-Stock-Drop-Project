@@ -1,0 +1,112 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id           String         @id @default(cuid())
+  email        String         @unique
+  name         String?
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  logs         InventoryLog[]
+  orders       Order[]
+  reservations Reservation[]
+}
+
+model Product {
+  id           String         @id @default(cuid())
+  name         String
+  description  String?
+  price        Float
+  stock        Int            @default(0)
+  version      Int            @default(0)
+  imageUrl     String?
+  isActive     Boolean        @default(true)
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  logs         InventoryLog[]
+  orders       Order[]
+  reservations Reservation[]
+
+  @@map("products")
+}
+
+model Reservation {
+  id        String            @id @default(cuid())
+  userId    String
+  productId String
+  quantity  Int
+  expiresAt DateTime
+  status    ReservationStatus @default(PENDING)
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+  order     Order?
+  product   Product           @relation(fields: [productId], references: [id], onDelete: Cascade)
+  user      User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, productId, status])
+  @@index([expiresAt])
+  @@map("reservations")
+}
+
+model Order {
+  id            String       @id @default(cuid())
+  userId        String
+  productId     String
+  reservationId String?      @unique
+  total         Float
+  status        OrderStatus  @default(COMPLETED)
+  createdAt     DateTime     @default(now())
+  product       Product      @relation(fields: [productId], references: [id])
+  reservation   Reservation? @relation(fields: [reservationId], references: [id])
+  user          User         @relation(fields: [userId], references: [id])
+
+  @@map("orders")
+}
+
+model InventoryLog {
+  id             String          @id @default(cuid())
+  productId      String
+  userId         String?
+  reservationId  String?
+  action         InventoryAction
+  quantityChange Int
+  notes          String?
+  createdAt      DateTime        @default(now())
+  product        Product         @relation(fields: [productId], references: [id])
+  user           User?           @relation(fields: [userId], references: [id])
+
+  @@map("inventory_logs")
+}
+
+enum ReservationStatus {
+  PENDING
+  COMPLETED
+  EXPIRED
+}
+
+enum OrderStatus {
+  COMPLETED
+  CANCELLED
+}
+
+enum InventoryAction {
+  RESERVE
+  RESTORE
+  CHECKOUT
+  EXPIRE
+}
+
+
+
+
+
+
+
+
+
+
