@@ -11,6 +11,9 @@ import rateLimit from "express-rate-limit";
 import { errorHandler } from "./middleware/errorHandler";
 import { requestLogger } from "./middleware/requestLogger";
 import reservationRoutes from "./routes/reservationRoutes";
+import checkoutRoutes from './routes/checkoutRoutes';
+
+
 
 
 const app = express();
@@ -36,6 +39,18 @@ const limiter = rateLimit({
 });
 app.use(limiter);
 
+// Home route
+app.get('/', (req, res) => {
+  res.json({
+    message: "Limited Stock Drop API is running",
+    endpoints: {
+      health: "GET /health",
+      reserve: "POST /api/reserve",
+      checkout: "POST /api/checkout"
+    }
+  });
+});
+
 // Health Check
 app.get("/health", (req, res) => {
   res.json({
@@ -46,6 +61,7 @@ app.get("/health", (req, res) => {
 });
 
 app.use('/api', reservationRoutes);
+app.use('/api', checkoutRoutes);
 
 // Metrics (Simple)
 app.get("/metrics", (req, res) => {

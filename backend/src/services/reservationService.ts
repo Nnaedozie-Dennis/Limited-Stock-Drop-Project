@@ -5,6 +5,7 @@ import { AppError } from "../middleware/errorHandler";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { Pool } from "pg";
 import dotenv from 'dotenv';
+// import { OrderStatus } from "@prisma/client";
 
 dotenv.config();   // ← Force reload .env
 
@@ -94,6 +95,103 @@ export class ReservationService {
       });
 
       return reservation;
+    });
+  }
+
+  //   async checkout(reservationId: string) {
+  //   return await prisma.$transaction(async (tx) => {
+  //     // 1. Find the reservation
+  //     const reservation = await tx.reservation.findUnique({
+  //       where: { id: reservationId },
+  //       include: { product: true }
+  //     });
+
+  //     if (!reservation) throw new AppError('Reservation not found', 404);
+  //     if (reservation.status !== ReservationStatus.PENDING) {
+  //       throw new AppError('Reservation is no longer valid', 400);
+  //     }
+  //     if (new Date() > reservation.expiresAt) {
+  //       throw new AppError('Reservation has expired', 400);
+  //     }
+
+  //     // 2. Create Order
+  //     const order = await tx.order.create({
+  //       data: {
+  //         userId: reservation.userId,
+  //         reservationId: reservation.id,
+  //         productId: reservation.productId,
+  //         total: reservation.product.price * reservation.quantity,
+  //         status: OrderStatus.COMPLETED,
+  //       },
+  //     });
+
+  //     // 3. Mark reservation as completed
+  //     await tx.reservation.update({
+  //       where: { id: reservationId },
+  //       data: { status: ReservationStatus.COMPLETED }
+  //     });
+
+  //     // 4. Log the checkout
+  //     await tx.inventoryLog.create({
+  //       data: {
+  //         productId: reservation.productId,
+  //         userId: reservation.userId,
+  //         reservationId: reservation.id,
+  //         action: 'CHECKOUT',
+  //         quantityChange: -reservation.quantity,
+  //         notes: `Checkout completed for order ${order.id}`,
+  //       },
+  //     });
+
+  //     return { order, reservation };
+  //   });
+  // }
+
+  async checkout(reservationId: string) {
+    return await prisma.$transaction(async (tx) => {
+      const reservation = await tx.reservation.findUnique({
+        where: { id: reservationId },
+        include: { product: true },
+      });
+
+      if (!reservation) throw new AppError("Reservation not found", 404);
+      if (reservation.status !== "PENDING") {
+        throw new AppError("Reservation is no longer valid", 400);
+      }
+      if (new Date() > reservation.expiresAt) {
+        throw new AppError("Reservation has expired", 400);
+      }
+
+      // Create Order
+      const order = await tx.order.create({
+        data: {
+          userId: reservation.userId,
+          reservationId: reservation.id,
+          productId: reservation.productId,
+          total: reservation.product.price * reservation.quantity,
+          status: "COMPLETED",
+        },
+      });
+
+      // Mark reservation as completed
+      await tx.reservation.update({
+        where: { id: reservationId },
+        data: { status: "COMPLETED" },
+      });
+
+      // Log action
+      await tx.inventoryLog.create({
+        data: {
+          productId: reservation.productId,
+          userId: reservation.userId,
+          reservationId: reservation.id,
+          action: "CHECKOUT",
+          quantityChange: -reservation.quantity,
+          notes: `Checkout completed for order ${order.id}`,
+        },
+      });
+
+      return { order, reservation };
     });
   }
 }
