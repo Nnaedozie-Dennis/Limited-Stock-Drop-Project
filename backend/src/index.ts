@@ -13,6 +13,8 @@ import { requestLogger } from "./middleware/requestLogger";
 import reservationRoutes from "./routes/reservationRoutes";
 import checkoutRoutes from './routes/checkoutRoutes';
 import { startExpirationJob } from "./jobs/expirationJob";
+import productRoutes from "./routes/productRoutes";
+import userRoutes from "./routes/userRoutes";
 
 
 
@@ -33,6 +35,10 @@ app.use(
 app.use(express.json());
 app.use(morgan("combined"));
 app.use(requestLogger);
+
+// Register routes
+app.use('/api/products', productRoutes);
+app.use('/api/users', userRoutes);
 
 // Rate Limiting
 const limiter = rateLimit({
