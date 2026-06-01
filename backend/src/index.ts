@@ -12,6 +12,9 @@ import { errorHandler } from "./middleware/errorHandler";
 import { requestLogger } from "./middleware/requestLogger";
 import reservationRoutes from "./routes/reservationRoutes";
 import checkoutRoutes from './routes/checkoutRoutes';
+import { startExpirationJob } from "./jobs/expirationJob";
+
+
 
 
 
@@ -75,6 +78,8 @@ app.get("/metrics", (req, res) => {
 
 // Centralized Error Handler
 app.use(errorHandler);
+// Start background job
+startExpirationJob();
 
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
