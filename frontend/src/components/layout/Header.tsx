@@ -1,6 +1,8 @@
 import { Moon, Sun, ShoppingBag } from "lucide-react";
+// import { Menu, X, User } from "lucide-react";
 import { useTheme } from "../../context/ThemeContext";
 import { NavLink } from "react-router-dom";
+// import Login from "../../pages/Login";
 
 const Header = () => {
   const { theme, toggleTheme } = useTheme();
@@ -42,8 +44,13 @@ const Header = () => {
           <button className="rounded-full bg-black px-5 py-2 text-white transition hover:opacity-90 dark:bg-white dark:text-black">
             Reserve Now
           </button>
+          <NavLink to="/login" className="rounded-full bg-black px-5 py-2 text-white transition hover:opacity-90 dark:bg-white dark:text-black">
+            Login
+          </NavLink>
         </div>
       </div>
+
+      
     </header>
   );
 };

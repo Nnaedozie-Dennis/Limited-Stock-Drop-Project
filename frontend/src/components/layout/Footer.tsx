@@ -1,5 +1,5 @@
 // import { Instagram, Twitter, Facebook } from "lucide-react";
-// import { Instagram, Twitter, Facebook } from "lucide-react";
+// import {Instagram, Twitter, Whatsapp, Facebook}  from "lucide-react";
 
 const Footer = () => {
   return (
@@ -37,11 +37,12 @@ const Footer = () => {
           <div>
             <h3 className="mb-4 font-semibold">Follow Us</h3>
 
-            {/* <div className="flex gap-4">
-              <Instagram />
-              <Twitter />
+            <div className="flex gap-4">
+              {/* <Instagram /> */}
+              {/* <Twitter />
               <Facebook />
-            </div> */}
+              <whatsapp/> */}
+            </div>
           </div>
         </div>
 
