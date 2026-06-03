@@ -1,5 +1,6 @@
 import { Moon, Sun, ShoppingBag } from "lucide-react";
 import { useTheme } from "../../context/ThemeContext";
+import { NavLink } from "react-router-dom";
 
 const Header = () => {
   const { theme, toggleTheme } = useTheme();
@@ -13,21 +14,21 @@ const Header = () => {
         </div>
 
         <nav className="hidden gap-8 md:flex">
-          <a href="#" className="font-medium hover:opacity-70">
+          <NavLink to="/" className="font-medium hover:opacity-70">
             Home
-          </a>
+          </NavLink>
 
-          <a href="#" className="font-medium hover:opacity-70">
-            Drops
-          </a>
+          <NavLink to="/shop" className="font-medium hover:opacity-70">
+            Shop Drops
+          </NavLink>
 
-          <a href="#" className="font-medium hover:opacity-70">
-            Collections
-          </a>
+          <NavLink to="/contact" className="font-medium hover:opacity-70">
+            Contact Collections
+          </NavLink>
 
-          <a href="#" className="font-medium hover:opacity-70">
+          <NavLink to="/about" className="font-medium hover:opacity-70">
             About
-          </a>
+          </NavLink>
         </nav>
 
         <div className="flex items-center gap-4">
