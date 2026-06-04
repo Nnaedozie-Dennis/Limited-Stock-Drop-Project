@@ -1,13 +1,11 @@
-
-
 import { PrismaClient, ReservationStatus } from "@prisma/client";
 import { AppError } from "../middleware/errorHandler";
 import { PrismaPg } from "@prisma/adapter-pg";
-import { Pool } from "pg";
-import dotenv from 'dotenv';
+import { Pool } from "../../node_modules/@types/pg";
+import dotenv from "dotenv";
 // import { OrderStatus } from "@prisma/client";
 
-dotenv.config();   // ← Force reload .env
+dotenv.config(); // ← Force reload .env
 
 const connectionString = process.env.DATABASE_URL;
 
@@ -16,9 +14,9 @@ if (!connectionString) {
 }
 
 // const pool = new Pool({ connectionString });
-const pool = new Pool({ 
+const pool = new Pool({
   connectionString,
-  max: 10,           // Connection pool size
+  max: 10, // Connection pool size
   idleTimeoutMillis: 30000,
 });
 const adapter = new PrismaPg(pool);

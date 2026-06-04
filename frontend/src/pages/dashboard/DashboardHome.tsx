@@ -1,39 +1,105 @@
+import { ShoppingBag, Clock3, Wallet, Heart, ArrowUpRight } from "lucide-react";
+
 const DashboardHome = () => {
   return (
     <>
-      <h1 className="text-4xl font-bold">Dashboard</h1>
+      {/* Header */}
+      <div>
+        <h1 className="text-3xl font-bold lg:text-4xl">Dashboard</h1>
 
-      <p className="mt-3 text-gray-500">Welcome back to Aether.</p>
+        <p className="mt-2 text-gray-500">
+          Welcome back. Here's what's happening with your account.
+        </p>
+      </div>
 
-      <div className="mt-10 grid gap-6 md:grid-cols-3">
-        <div className="rounded-3xl bg-white p-6 shadow-sm dark:bg-slate-900">
-          <h3 className="text-gray-500">Active Reservations</h3>
+      {/* Stats */}
+      <div className="mt-10 grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
+        <div className="rounded-3xl border bg-white p-6 shadow-sm dark:bg-slate-900">
+          <div className="flex items-center justify-between">
+            <Clock3 className="text-gray-500" />
+            <ArrowUpRight size={18} />
+          </div>
 
-          <p className="mt-3 text-4xl font-bold">3</p>
+          <p className="mt-4 text-sm text-gray-500">Active Reservations</p>
+
+          <h3 className="mt-2 text-4xl font-bold">3</h3>
         </div>
 
-        <div className="rounded-3xl bg-white p-6 shadow-sm dark:bg-slate-900">
-          <h3 className="text-gray-500">Orders</h3>
+        <div className="rounded-3xl border bg-white p-6 shadow-sm dark:bg-slate-900">
+          <div className="flex items-center justify-between">
+            <ShoppingBag className="text-gray-500" />
+            <ArrowUpRight size={18} />
+          </div>
 
-          <p className="mt-3 text-4xl font-bold">12</p>
+          <p className="mt-4 text-sm text-gray-500">Orders</p>
+
+          <h3 className="mt-2 text-4xl font-bold">12</h3>
         </div>
 
-        <div className="rounded-3xl bg-white p-6 shadow-sm dark:bg-slate-900">
-          <h3 className="text-gray-500">Amount Spent</h3>
+        <div className="rounded-3xl border bg-white p-6 shadow-sm dark:bg-slate-900">
+          <div className="flex items-center justify-between">
+            <Wallet className="text-gray-500" />
+            <ArrowUpRight size={18} />
+          </div>
 
-          <p className="mt-3 text-4xl font-bold">$2,450</p>
+          <p className="mt-4 text-sm text-gray-500">Amount Spent</p>
+
+          <h3 className="mt-2 text-4xl font-bold">$2,450</h3>
+        </div>
+
+        <div className="rounded-3xl border bg-white p-6 shadow-sm dark:bg-slate-900">
+          <div className="flex items-center justify-between">
+            <Heart className="text-gray-500" />
+            <ArrowUpRight size={18} />
+          </div>
+
+          <p className="mt-4 text-sm text-gray-500">Wishlist</p>
+
+          <h3 className="mt-2 text-4xl font-bold">8</h3>
         </div>
       </div>
 
-      <div className="mt-10 rounded-3xl bg-white p-6 shadow-sm dark:bg-slate-900">
-        <h2 className="text-xl font-semibold">Recent Activity</h2>
+      {/* Recent Activity + Reservation Summary */}
+      <div className="mt-10 grid gap-6 xl:grid-cols-2">
+        <div className="rounded-3xl border bg-white p-6 shadow-sm dark:bg-slate-900">
+          <h2 className="text-xl font-semibold">Recent Activity</h2>
 
-        <div className="mt-6 space-y-4">
-          <div>Reserved Air Jordan Retro High</div>
+          <div className="mt-6 space-y-5">
+            <div className="border-b pb-4">Reserved Air Jordan Retro High</div>
 
-          <div>Completed Order #ATH-102938</div>
+            <div className="border-b pb-4">Completed Order #ATH-102938</div>
 
-          <div>Reserved Nike Dunk Low</div>
+            <div className="border-b pb-4">Reserved Nike Dunk Low</div>
+
+            <div>Added Yeezy Boost 350 to Wishlist</div>
+          </div>
+        </div>
+
+        <div className="rounded-3xl border bg-white p-6 shadow-sm dark:bg-slate-900">
+          <h2 className="text-xl font-semibold">Reservation Status</h2>
+
+          <div className="mt-6">
+            <div className="mb-4 flex items-center justify-between">
+              <span>Nike Dunk Low Panda</span>
+              <span className="rounded-full bg-green-100 px-3 py-1 text-sm text-green-700">
+                Active
+              </span>
+            </div>
+
+            <div className="mb-4 flex items-center justify-between">
+              <span>Air Jordan Retro High</span>
+              <span className="rounded-full bg-yellow-100 px-3 py-1 text-sm text-yellow-700">
+                Pending
+              </span>
+            </div>
+
+            <div className="flex items-center justify-between">
+              <span>Yeezy Boost 350</span>
+              <span className="rounded-full bg-red-100 px-3 py-1 text-sm text-red-700">
+                Expired
+              </span>
+            </div>
+          </div>
         </div>
       </div>
     </>
