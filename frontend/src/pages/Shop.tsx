@@ -31,6 +31,15 @@ import Container from "../components/common/Container";
 import ProductCard from "../components/common/ProductCard";
 import { products } from "../data/products";
 
+// import { useEffect } from "react";
+// import { api } from "../services/api";
+
+// useEffect(() => {
+//   api.get("/products").then((res) => {
+//     console.log(res.data);
+//   });
+// }, []);
+
 const Shop = () => {
   return (
     <>
