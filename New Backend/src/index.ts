@@ -6,6 +6,7 @@ import express from "express";
 import cors from "cors";
 import productRoutes from "./routes/product.routes";
 import reservationRoutes from "./routes/reservation.routes";
+import orderRoutes from "./routes/order.routes";
 import { expireReservationsJob } from "./jobs/expireReservations";
 
 
@@ -26,6 +27,7 @@ app.get("/health", (req, res) => {
 
 app.use("/api/products", productRoutes);
 app.use("/api/reservations", reservationRoutes);
+app.use("/api/orders", orderRoutes);
 
 setInterval(() => {
   expireReservationsJob();

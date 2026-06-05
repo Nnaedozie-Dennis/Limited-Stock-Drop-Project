@@ -38,7 +38,7 @@ const Shop = () => {
     return (
       <div className="flex min-h-screen items-center justify-center">
         {/* Loading products... */}
-        <Skeleton className="h-[500px] w-full rounded-3xl" />
+        <Skeleton className="h-125 w-full rounded-3xl" />
       </div>
     );
   }

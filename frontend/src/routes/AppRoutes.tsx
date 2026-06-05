@@ -5,8 +5,8 @@ import About from "../pages/About";
 import Contact from "../pages/Contact";
 import ProductDetails from "../pages/ProductDetails";
 // import ReserveProduct from "../pages/ReserveProduct";
-// import Checkout from "../pages/Checkout";
-// import OrderSuccess from "../pages/OrderSuccess";
+import Checkout from "../pages/Checkout";
+import OrderSuccess from "../pages/OrderSuccess";
 import ReservationDetails from "../pages/ReservationDetails";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
@@ -31,6 +31,8 @@ const AppRoutes = () => {
       {/* <Route path="/reserve/:id" element={<ReserveProduct />} /> */}
       {/* <Route path="/checkout" element={<Checkout />} />
       <Route path="/order-success" element={<OrderSuccess />} /> */}
+      <Route path="/order-success/:orderId" element={<OrderSuccess />} />
+      <Route path="/checkout/:reservationId" element={<Checkout />} />
       <Route path="/reservation/:id" element={<ReservationDetails />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
