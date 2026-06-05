@@ -26,3 +26,25 @@ export const getProducts = async (req: Request, res: Response) => {
     });
   }
 };
+
+export const getProductById = async (req: any, res: any) => {
+  const { id } = req.params;
+
+  const { data, error } = await supabase
+    .from("products")
+    .select("*")
+    .eq("id", id)
+    .single();
+
+  if (error) {
+    return res.status(404).json({
+      success: false,
+      message: "Product not found",
+    });
+  }
+
+  return res.json({
+    success: true,
+    product: data,
+  });
+};
