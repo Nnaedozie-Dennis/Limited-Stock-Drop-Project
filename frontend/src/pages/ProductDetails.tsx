@@ -5,6 +5,7 @@ import Footer from "../components/layout/Footer";
 import Container from "../components/common/Container";
 import { api } from "../services/api";
 import type { Product } from "../types/product";
+import Skeleton from "../components/common/Skeleton";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -35,7 +36,8 @@ const ProductDetails = () => {
   if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center">
-        Loading...
+        {/* Loading... */}
+        <Skeleton className="h-[500px] w-full rounded-3xl" />
       </div>
     );
   }

@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { api } from "../services/api";
 import type { Product } from "../types/product";
 import { Link } from "react-router-dom";
+import Skeleton from "../components/common/Skeleton";
 
 const Shop = () => {
 
@@ -36,7 +37,8 @@ const Shop = () => {
   if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center">
-        Loading products...
+        {/* Loading products... */}
+        <Skeleton className="h-[500px] w-full rounded-3xl" />
       </div>
     );
   }
@@ -112,6 +114,8 @@ const Shop = () => {
             ))}
             
           </div>
+
+          {/* <ProductCard product={product} /> */}
         </Container>
       </main>
 

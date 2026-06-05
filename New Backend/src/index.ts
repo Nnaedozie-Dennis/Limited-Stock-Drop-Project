@@ -5,6 +5,7 @@ dotenv.config();
 import express from "express";
 import cors from "cors";
 import productRoutes from "./routes/product.routes";
+import reservationRoutes from "./routes/reservation.routes";
 
 
 const app = express();
@@ -23,6 +24,7 @@ app.get("/health", (req, res) => {
 });
 
 app.use("/api/products", productRoutes);
+app.use("/api/reservations", reservationRoutes);
 
 const PORT = process.env.PORT || 5000;
 
