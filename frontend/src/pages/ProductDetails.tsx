@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
 import Container from "../components/common/Container";
@@ -9,9 +9,25 @@ import Skeleton from "../components/common/Skeleton";
 
 const ProductDetails = () => {
   const { id } = useParams();
-
+  const navigate = useNavigate();
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
+
+
+    const handleReserve = async () => {
+      if (!product) return;
+
+      try {
+        const res = await api.post("/reservations", {
+          productId: product.id,
+          quantity: 1,
+        });
+
+        navigate(`/reservation/${res.data.reservation.id}`);
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -32,6 +48,7 @@ const ProductDetails = () => {
 
     fetchProduct();
   }, [id]);
+
 
   if (loading) {
     return (
@@ -89,7 +106,10 @@ const ProductDetails = () => {
                 </span>
               </div>
 
-              <button className="mt-10 rounded-full bg-black px-8 py-4 text-white transition hover:opacity-90 dark:bg-white dark:text-black">
+              <button
+                onClick={handleReserve}
+                className="mt-10 rounded-full bg-black px-8 py-4 text-white transition hover:opacity-90 dark:bg-white dark:text-black cursor-pointer"
+              >
                 Reserve Now
               </button>
             </div>

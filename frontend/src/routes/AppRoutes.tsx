@@ -4,9 +4,10 @@ import Shop from "../pages/Shop";
 import About from "../pages/About";
 import Contact from "../pages/Contact";
 import ProductDetails from "../pages/ProductDetails";
-import ReserveProduct from "../pages/ReserveProduct";
-import Checkout from "../pages/Checkout";
-import OrderSuccess from "../pages/OrderSuccess";
+// import ReserveProduct from "../pages/ReserveProduct";
+// import Checkout from "../pages/Checkout";
+// import OrderSuccess from "../pages/OrderSuccess";
+import ReservationDetails from "../pages/ReservationDetails";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import ForgotPassword from "../pages/ForgotPassword";
@@ -27,9 +28,10 @@ const AppRoutes = () => {
       <Route path="/about" element={<About />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/products/:id" element={<ProductDetails />} />
-      <Route path="/reserve/:id" element={<ReserveProduct />} />
-      <Route path="/checkout" element={<Checkout />} />
-      <Route path="/order-success" element={<OrderSuccess />} />
+      {/* <Route path="/reserve/:id" element={<ReserveProduct />} /> */}
+      {/* <Route path="/checkout" element={<Checkout />} />
+      <Route path="/order-success" element={<OrderSuccess />} /> */}
+      <Route path="/reservation/:id" element={<ReservationDetails />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />

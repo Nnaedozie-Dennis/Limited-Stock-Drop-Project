@@ -77,3 +77,25 @@ export const createReservation = async (req: Request, res: Response) => {
     });
   }
 };
+
+export const getReservationById = async (req: any, res: any) => {
+  const { id } = req.params;
+
+  const { data, error } = await supabase
+    .from("reservations")
+    .select("*")
+    .eq("id", id)
+    .single();
+
+  if (error) {
+    return res.status(404).json({
+      success: false,
+      message: "Reservation not found",
+    });
+  }
+
+  return res.json({
+    success: true,
+    reservation: data,
+  });
+};

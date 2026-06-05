@@ -1,8 +1,10 @@
 import { Router } from "express";
-import { createReservation } from "../controllers/reservation.controller";
+import { createReservation, getReservationById } from "../controllers/reservation.controller";
+
 
 const router = Router();
 
 router.post("/", createReservation);
+router.get("/:id", getReservationById);
 
 export default router;
