@@ -6,6 +6,7 @@ import express from "express";
 import cors from "cors";
 import productRoutes from "./routes/product.routes";
 import reservationRoutes from "./routes/reservation.routes";
+import { expireReservationsJob } from "./jobs/expireReservations";
 
 
 const app = express();
@@ -25,6 +26,10 @@ app.get("/health", (req, res) => {
 
 app.use("/api/products", productRoutes);
 app.use("/api/reservations", reservationRoutes);
+
+setInterval(() => {
+  expireReservationsJob();
+}, 60 * 1000); // runs every 1 minute
 
 const PORT = process.env.PORT || 5000;
 
