@@ -2,8 +2,48 @@ import { Link } from "react-router-dom";
 
 import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { supabase } from "../lib/supabase";
+
+
+
+
+// const handleLogin = async () => {
+//   const { error } = await supabase.auth.signInWithPassword({
+//     email,
+//     password,
+//   });
+
+//   if (error) {
+//     console.log(error.message);
+//     return;
+//   }
+
+//   navigate("/dashboard");
+// };
 
 const Login = () => {
+
+  const navigate = useNavigate();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = async () => {
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (error) {
+      console.log(error.message);
+      return;
+    }
+
+    navigate("/");
+  } ;
+
   return (
     <>
       <Header />
@@ -16,20 +56,33 @@ const Login = () => {
             Sign in to manage reservations and orders.
           </p>
 
-          <form className="mt-10 space-y-5">
+          <form
+            className="mt-10 space-y-5"
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleLogin();
+            }}
+          >
             <input
               type="email"
               placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="w-full rounded-2xl border p-4"
             />
 
             <input
               type="password"
               placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               className="w-full rounded-2xl border p-4"
             />
 
-            <button className="w-full rounded-full bg-black py-4 text-white dark:bg-white dark:text-black">
+            <button
+              type="submit"
+              className="w-full rounded-full bg-black py-4 text-white dark:bg-white dark:text-black"
+            >
               Login
             </button>
           </form>

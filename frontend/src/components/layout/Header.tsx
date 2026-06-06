@@ -1,11 +1,27 @@
-import { Moon, Sun, ShoppingBag, Menu, X } from "lucide-react";
+import { Moon, Sun, ShoppingBag, Menu, X, User} from "lucide-react";
 import { useTheme } from "../../context/ThemeContext";
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
+import {useAuth} from "../../context/AuthContext"
+import { useNavigate } from "react-router-dom";
+import { supabase } from "../../lib/supabase";
+
+
+
 
 const Header = () => {
   const { theme, toggleTheme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
+  const { user } = useAuth();
+  const [showUserMenu, setShowUserMenu] = useState(false);
+
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+
+    navigate("/");
+  };
 
   return (
     <>
@@ -45,19 +61,81 @@ const Header = () => {
               {theme === "light" ? <Moon size={18} /> : <Sun size={18} />}
             </button>
 
-            <NavLink
-              to="/login"
-              className="rounded-full border px-5 py-2 transition hover:bg-gray-100 dark:hover:bg-slate-800"
-            >
-              Login
-            </NavLink>
+            {user ? (
+              <div className="relative">
+                <button
+                  onClick={() => setShowUserMenu(!showUserMenu)}
+                  className="flex h-10 w-10 items-center justify-center rounded-full bg-black text-white dark:bg-white dark:text-black"
+                >
+                  <User size={18} />
+                  {/* {user.user_metadata?.fullname?.charAt(0)?.toUpperCase() ||
+                    "U"} */}
+                </button>
 
-            <NavLink
-              to="/register"
-              className="rounded-full bg-black px-5 py-2 text-white transition hover:opacity-90 dark:bg-white dark:text-black"
-            >
-              Sign Up
-            </NavLink>
+                {showUserMenu && (
+                  <div className="absolute right-0 mt-3 w-56 rounded-2xl border bg-white p-2 shadow-lg dark:bg-slate-900">
+                    <div className="border-b p-3">
+                      <p className="font-medium">
+                        {user.user_metadata?.fullname || "User"}
+                      </p>
+
+                      <p className="text-sm text-gray-500">{user.email}</p>
+                    </div>
+
+                    <NavLink
+                      to="/dashboard/profile"
+                      className="block rounded-xl px-4 py-3 hover:bg-gray-100 dark:hover:bg-slate-800"
+                    >
+                      My Profile
+                    </NavLink>
+
+                    <NavLink
+                      to="/dashboard/reservations"
+                      className="block rounded-xl px-4 py-3 hover:bg-gray-100 dark:hover:bg-slate-800"
+                    >
+                      My Reservations
+                    </NavLink>
+
+                    <NavLink
+                      to="/dashboard/orders"
+                      className="block rounded-xl px-4 py-3 hover:bg-gray-100 dark:hover:bg-slate-800"
+                    >
+                      My Orders
+                    </NavLink>
+
+                    <NavLink
+                      to="/dashboard"
+                      className="block rounded-xl px-4 py-3 hover:bg-gray-100 dark:hover:bg-slate-800"
+                    >
+                      Dashboard
+                    </NavLink>
+
+                    <button
+                      onClick={handleLogout}
+                      className="mt-2 w-full rounded-xl px-4 py-3 text-left text-red-500 hover:bg-red-50"
+                    >
+                      Logout
+                    </button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <>
+                <NavLink
+                  to="/login"
+                  className="rounded-full border px-5 py-2 transition hover:bg-gray-100 dark:hover:bg-slate-800"
+                >
+                  Login
+                </NavLink>
+
+                <NavLink
+                  to="/register"
+                  className="rounded-full bg-black px-5 py-2 text-white transition hover:opacity-90 dark:bg-white dark:text-black"
+                >
+                  Sign Up
+                </NavLink>
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -120,30 +198,97 @@ const Header = () => {
               </NavLink>
             </div>
 
+            {/* User Profile and actions */}
+
             {/* Mobile Actions */}
-            <div className="mt-10 flex flex-col gap-3">
+            <div className="mt-5 flex flex-col gap-3">
+              {user ? (
+                <div className="relative">
+                  <div className="flex items-center gap-3">
+                    <button
+                      onClick={() => setShowUserMenu(!showUserMenu)}
+                      className="flex h-10 w-10 items-center justify-center rounded-full bg-black text-white dark:bg-white dark:text-black"
+                    >
+                      <User size={18} />
+                      {/* {user.user_metadata?.fullname?.charAt(0)?.toUpperCase() ||
+                        "U"} */}
+                    </button>
+                    <p className="font-medium">User Profile </p>
+                  </div>
+
+                  {showUserMenu && (
+                    <div className="absolute right-0 mt-3 w-56 rounded-2xl border bg-white p-2 shadow-lg dark:bg-slate-900">
+                      <div className="border-b p-3">
+                        <p className="font-medium">
+                          {user.user_metadata?.fullname || "User"}
+                        </p>
+
+                        <p className="text-sm text-gray-500">{user.email}</p>
+                      </div>
+
+                      <NavLink
+                        to="/dashboard/profile"
+                        className="block rounded-xl px-4 py-1 pt-2 hover:bg-gray-100 dark:hover:bg-slate-800"
+                      >
+                        My Profile
+                      </NavLink>
+
+                      <NavLink
+                        to="/dashboard/reservations"
+                        className="block rounded-xl px-4 py-1 hover:bg-gray-100 dark:hover:bg-slate-800"
+                      >
+                        My Reservations
+                      </NavLink>
+
+                      <NavLink
+                        to="/dashboard/orders"
+                        className="block rounded-xl px-4 py-1 hover:bg-gray-100 dark:hover:bg-slate-800"
+                      >
+                        My Orders
+                      </NavLink>
+
+                      <NavLink
+                        to="/dashboard"
+                        className="block rounded-xl px-4 py-1 hover:bg-gray-100 dark:hover:bg-slate-800"
+                      >
+                        Dashboard
+                      </NavLink>
+
+                      <button
+                        onClick={handleLogout}
+                        className=" w-full rounded-xl px-4 py-1 text-left text-red-500 hover:bg-red-50"
+                      >
+                        Logout
+                      </button>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <>
+                  <NavLink
+                    to="/login"
+                    onClick={() => setIsOpen(false)}
+                    className="rounded-full border px-5 py-3 text-center"
+                  >
+                    Login
+                  </NavLink>
+
+                  <NavLink
+                    to="/register"
+                    onClick={() => setIsOpen(false)}
+                    className="rounded-full bg-black px-5 py-3 text-center text-white dark:bg-white dark:text-black"
+                  >
+                    Sign Up
+                  </NavLink>
+                </>
+              )}
+
               <button
                 onClick={toggleTheme}
                 className="rounded-full border px-5 py-3"
               >
                 {theme === "light" ? "Dark Mode" : "Light Mode"}
               </button>
-
-              <NavLink
-                to="/login"
-                onClick={() => setIsOpen(false)}
-                className="rounded-full border px-5 py-3 text-center"
-              >
-                Login
-              </NavLink>
-
-              <NavLink
-                to="/register"
-                onClick={() => setIsOpen(false)}
-                className="rounded-full bg-black px-5 py-3 text-center text-white dark:bg-white dark:text-black"
-              >
-                Sign Up
-              </NavLink>
             </div>
           </div>
         </>

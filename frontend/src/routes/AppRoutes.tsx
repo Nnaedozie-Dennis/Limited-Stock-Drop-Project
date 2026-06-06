@@ -18,6 +18,7 @@ import DashboardHome from "../pages/dashboard/DashboardHome";
 import Reservations from "../pages/dashboard/Reservations";
 import Orders from "../pages/dashboard/Orders";
 import ProtectedRoute from "./ProtectedRoute";
+import ResetPassword from "../pages/ResetPassword";
 
 
 const AppRoutes = () => {
@@ -37,6 +38,7 @@ const AppRoutes = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
+      <Route path="/reset-password" element={<ResetPassword />} />
       <Route path="*" element={<NotFound />} />
 
       <Route

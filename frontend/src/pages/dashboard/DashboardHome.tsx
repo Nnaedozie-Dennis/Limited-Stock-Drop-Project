@@ -3,11 +3,14 @@ import { useEffect, useState } from "react";
 import { api } from "../../services/api";
 
 
+
 interface DashboardStats {
   reservations: number;
   orders: number;
   totalSpent: number;
 }
+
+
 
 const DashboardHome = () => {
     const [stats, setStats] = useState<DashboardStats | null>(null);
@@ -78,8 +81,9 @@ const DashboardHome = () => {
           <p className="mt-4 text-sm text-gray-500">Amount Spent</p>
 
           <h3 className="mt-2 text-4xl font-bold">
-            {" "}
-            ${stats?.totalSpent.toFixed(2)}
+            {/* {" "}
+            ${stats?.totalSpent.toFixed(2)} */}
+            ${stats ? stats.totalSpent.toFixed(2) : "0.00"}
           </h3>
         </div>
 
