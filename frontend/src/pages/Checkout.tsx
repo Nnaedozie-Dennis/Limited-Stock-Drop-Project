@@ -154,6 +154,7 @@ const Checkout = () => {
   const { reservationId } = useParams();
   const [reservation, setReservation] = useState<any>(null);
   const navigate = useNavigate();
+  console.log(reservation);
 
 
   const handleCheckout = async () => {
@@ -193,58 +194,65 @@ const Checkout = () => {
 
   return (
     <>
-    <Header />
+      <Header />
+      
 
-    <div className="min-h-screen bg-gray-50 px-6 py-20 dark:bg-slate-950">
-      <div className="mx-auto max-w-4xl rounded-3xl bg-white p-8 shadow-sm dark:bg-slate-900">
-        <h1 className="text-4xl font-bold">Checkout</h1>
+      <div className="min-h-screen bg-gray-50 px-6 py-20 dark:bg-slate-950">
+        <div className="mx-auto max-w-4xl rounded-3xl bg-white p-8 shadow-sm dark:bg-slate-900">
+          <h1 className="text-4xl font-bold">Checkout</h1>
 
-        <p className="mt-2 text-gray-500">
-          Complete your purchase before your reservation expires.
-        </p>
+          <p className="mt-2 text-gray-500">
+            Complete your purchase before your reservation expires.
+          </p>
 
-        <div className="mt-10 rounded-2xl border p-6">
-          <h2 className="text-xl font-semibold">Order Summary</h2>
+          <div className="mt-10 rounded-2xl border p-6">
+            <h2 className="text-xl font-semibold">Order Summary</h2>
 
-          <div className="mt-6 flex justify-between">
-            <span>Reservation ID</span>
+            <div className="mt-6 flex justify-between">
+              <span>Reservation ID</span>
 
-            <span>{reservationId}</span>
+              <span>{reservationId}</span>
+            </div>
+
+            <div className="mt-4 flex justify-between">
+              <span>Product</span>
+
+              <span>{reservation.products?.name}</span>
+            </div>
+
+            <div className="mt-4 flex justify-between">
+              <span>Price</span>
+
+              <span>${reservation.products.price}</span>
+            </div>
+
+            <div className="mt-4 flex justify-between">
+              <span>Quantity</span>
+
+              <span>{reservation.quantity}</span>
+            </div>
+
+            <div className="mt-6 border-t pt-4 flex justify-between font-bold">
+              <span>Total</span>
+
+              <span>
+                $
+                {(reservation.quantity * reservation.products.price).toFixed(2)}
+              </span>
+            </div>
           </div>
 
-          <div className="mt-4 flex justify-between">
-            <span>Product</span>
-
-            <span>ADD PRODUCT ID</span>
-          </div>
-
-          <div className="mt-4 flex justify-between">
-            <span>Quantity</span>
-
-            <span>{reservation.quantity}</span>
-          </div>
-
-          <div className="mt-6 border-t pt-4 flex justify-between font-bold">
-            <span>Total</span>
-
-            <span>
-              {/* ${(reservation.quantity * reservation.product.price).toFixed(2)} */}{" "}
-              ADD TOTAL PRICE
-            </span>
-          </div>
+          <button
+            onClick={handleCheckout}
+            className="mt-10 w-full rounded-full bg-black py-4 text-white transition hover:opacity-90 dark:bg-white dark:text-black"
+          >
+            Complete Purchase
+          </button>
         </div>
-
-        <button
-          onClick={handleCheckout}
-          className="mt-10 w-full rounded-full bg-black py-4 text-white transition hover:opacity-90 dark:bg-white dark:text-black"
-        >
-          Complete Purchase
-        </button>
       </div>
-    </div>
 
-    <Footer />
-   </>
+      <Footer />
+    </>
   );
 };
 

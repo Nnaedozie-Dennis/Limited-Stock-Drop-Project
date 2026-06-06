@@ -1,9 +1,33 @@
 import { Eye } from "lucide-react";
 // import EmptyState from "../../components/common/EmptyState";
+import { useEffect, useState } from "react";
+import { api } from "../../services/api";
+import type { Order } from "../../types/order";
 
 
 // const orders = [];
 const Orders = () => {
+
+  // const [orders, setOrders] = useState([]);
+  // interface Order {
+  //   id: string;
+  //   status: string;
+  //   created_at: string;
+  // }
+
+  const [orders, setOrders] = useState<Order[]>([]);
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      const res = await api.get("/orders");
+
+      setOrders(res.data.orders);
+    };
+
+    fetchOrders();
+  }, []);
+
+  
   return (
     <>
       <div>
@@ -19,66 +43,74 @@ const Orders = () => {
             description="Your completed purchases will appear here."
           />
         ) : ( */}
-          <div className="overflow-x-auto">
-            <table className="w-full min-w-212.5">
-              <thead className="border-b bg-gray-50 dark:bg-slate-800">
+        <div className="overflow-x-auto">
+          <table className="w-full min-w-212.5">
+            <thead className="border-b bg-gray-50 dark:bg-slate-800">
+              <tr>
+                <th className="px-6 py-4 text-left">Order ID</th>
+                <th className="px-6 py-4 text-left">Product</th>
+                <th className="px-6 py-4 text-left">Qty</th>
+                <th className="px-6 py-4 text-left">Amount</th>
+                <th className="px-6 py-4 text-left">Status</th>
+                <th className="px-6 py-4 text-left">Date</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {orders.length === 0 ? (
                 <tr>
-                  <th className="px-6 py-4 text-left">Order ID</th>
-                  <th className="px-6 py-4 text-left">Product</th>
-                  <th className="px-6 py-4 text-left">Date</th>
-                  <th className="px-6 py-4 text-left">Amount</th>
-                  <th className="px-6 py-4 text-left">Status</th>
-                  <th className="px-6 py-4 text-left">Action</th>
-                </tr>
-              </thead>
-
-              <tbody>
-                <tr className="border-b">
-                  <td className="px-6 py-5">ATH-102938</td>
-
-                  <td className="px-6 py-5">Nike Dunk Low Panda</td>
-
-                  <td className="px-6 py-5">May 12, 2026</td>
-
-                  <td className="px-6 py-5">$220</td>
-
-                  <td className="px-6 py-5">
-                    <span className="rounded-full bg-green-100 px-3 py-1 text-sm text-green-700">
-                      Completed
-                    </span>
-                  </td>
-
-                  <td className="px-6 py-5">
-                    <button className="rounded-lg border p-2">
-                      <Eye size={18} />
-                    </button>
+                  <td colSpan={6} className="py-12 text-center text-gray-500">
+                    No orders found.
                   </td>
                 </tr>
+              ) : (
+                orders.map((order) => (
+                  <tr key={order.id} className="border-b">
+                    <td className="px-6 py-5">{order.id.slice(0, 8)}</td>
 
-                <tr>
-                  <td className="px-6 py-5">ATH-102939</td>
+                    <td className="px-6 py-5">
+                      <div className="flex items-center gap-3">
+                        <img
+                          src={order.reservations.products.image_url}
+                          alt={order.reservations.products.name}
+                          className="h-12 w-12 rounded-lg object-cover"
+                        />
 
-                  <td className="px-6 py-5">Yeezy Boost 350</td>
+                        <span>{order.reservations.products.name}</span>
+                      </div>
+                    </td>
 
-                  <td className="px-6 py-5">April 25, 2026</td>
+                    <td className="px-6 py-5">{order.reservations.quantity}</td>
 
-                  <td className="px-6 py-5">$320</td>
+                    <td className="px-6 py-5">
+                      $
+                      {(
+                        order.reservations.quantity *
+                        order.reservations.products.price
+                      ).toFixed(2)}
+                    </td>
 
-                  <td className="px-6 py-5">
-                    <span className="rounded-full bg-green-100 px-3 py-1 text-sm text-green-700">
-                      Completed
-                    </span>
-                  </td>
+                    <td className="px-6 py-5">
+                      <span className="rounded-full bg-green-100 px-3 py-1 text-sm text-green-700">
+                        {order.status}
+                      </span>
+                    </td>
 
-                  <td className="px-6 py-5">
-                    <button className="rounded-lg border p-2">
-                      <Eye size={18} />
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+                    <td className="px-6 py-5">
+                      {new Date(order.created_at).toLocaleDateString()}
+                    </td>
+
+                    {/* <td className="px-6 py-5">
+                      <button className="rounded-lg border p-2">
+                        <Eye size={18} />
+                      </button>
+                    </td> */}
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
         {/*  )} */}
       </div>
     </>

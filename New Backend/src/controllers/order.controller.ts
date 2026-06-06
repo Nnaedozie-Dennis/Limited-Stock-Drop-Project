@@ -55,3 +55,57 @@ export const checkoutReservation = async (req: any, res: any) => {
     order,
   });
 };
+
+export const getOrders = async (req: any, res: any) => {
+
+  const { data, error } = await supabase
+    .from("orders")
+    .select(
+      `
+      *,
+      reservations (
+        quantity,
+        products (
+          name,
+          price,
+          image_url
+        )
+      )
+    `,
+    )
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+
+  return res.json({
+    success: true,
+    orders: data,
+  });
+};
+
+export const getOrderById = async (req: any, res: any) => {
+  const { id } = req.params;
+
+  const { data, error } = await supabase
+    .from("orders")
+    .select("*")
+    .eq("id", id)
+    .single();
+
+  if (error) {
+    return res.status(404).json({
+      success: false,
+      message: "Order not found",
+    });
+  }
+
+  return res.json({
+    success: true,
+    orders: data,
+  });
+};

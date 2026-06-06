@@ -83,7 +83,7 @@ export const getReservationById = async (req: any, res: any) => {
 
   const { data, error } = await supabase
     .from("reservations")
-    .select("*")
+    .select(`*, products(*)`)
     .eq("id", id)
     .single();
 
@@ -97,5 +97,35 @@ export const getReservationById = async (req: any, res: any) => {
   return res.json({
     success: true,
     reservation: data,
+  });
+};
+
+export const getReservations = async (req: any, res: any) => {
+  const { data, error } = await supabase
+    .from("reservations")
+    .select(
+      `
+      *,
+      products (
+        name,
+        image_url,
+        price
+      )
+    `,
+    )
+    .order("created_at", {
+      ascending: false,
+    });
+
+  if (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+
+  return res.json({
+    success: true,
+    reservations: data,
   });
 };

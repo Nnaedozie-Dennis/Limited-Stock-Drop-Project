@@ -12,6 +12,7 @@ const ProductDetails = () => {
   const navigate = useNavigate();
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
+  const [quantity, setQuantity] = useState(1);
 
 
     const handleReserve = async () => {
@@ -20,7 +21,7 @@ const ProductDetails = () => {
       try {
         const res = await api.post("/reservations", {
           productId: product.id,
-          quantity: 1,
+          quantity: quantity,
         });
 
         navigate(`/reservation/${res.data.reservation.id}`);
@@ -98,6 +99,32 @@ const ProductDetails = () => {
 
               <div className="mt-8">
                 <span className="text-4xl font-bold">${product.price}</span>
+              </div>
+
+              <div className="mt-6">
+                <label className="mb-2 block text-sm font-medium">
+                  Quantity
+                </label>
+
+                <div className="flex items-center gap-4">
+                  <button
+                    onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                    className="h-10 w-10 rounded-full border"
+                  >
+                    -
+                  </button>
+
+                  <span className="text-xl font-semibold">{quantity}</span>
+
+                  <button
+                    onClick={() =>
+                      setQuantity(Math.min(product.stock, quantity + 1))
+                    }
+                    className="h-10 w-10 rounded-full border"
+                  >
+                    +
+                  </button>
+                </div>
               </div>
 
               <div className="mt-4">

@@ -1,6 +1,39 @@
 import { ShoppingBag, Clock3, Wallet, Heart, ArrowUpRight } from "lucide-react";
+import { useEffect, useState } from "react";
+import { api } from "../../services/api";
+
+
+interface DashboardStats {
+  reservations: number;
+  orders: number;
+  totalSpent: number;
+}
 
 const DashboardHome = () => {
+    const [stats, setStats] = useState<DashboardStats | null>(null);
+
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+      const fetchStats = async () => {
+        try {
+          const res = await api.get("/dashboard/stats");
+
+          setStats(res.data.stats);
+        } catch (error) {
+          console.error(error);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      fetchStats();
+    }, []);
+
+    if (loading) {
+      return <div>Loading dashboard...</div>;
+    }
+
   return (
     <>
       {/* Header */}
@@ -22,7 +55,7 @@ const DashboardHome = () => {
 
           <p className="mt-4 text-sm text-gray-500">Active Reservations</p>
 
-          <h3 className="mt-2 text-4xl font-bold">3</h3>
+          <h3 className="mt-2 text-4xl font-bold">{stats?.reservations}</h3>
         </div>
 
         <div className="rounded-3xl border bg-white p-6 shadow-sm dark:bg-slate-900">
@@ -33,7 +66,7 @@ const DashboardHome = () => {
 
           <p className="mt-4 text-sm text-gray-500">Orders</p>
 
-          <h3 className="mt-2 text-4xl font-bold">12</h3>
+          <h3 className="mt-2 text-4xl font-bold">{stats?.orders}</h3>
         </div>
 
         <div className="rounded-3xl border bg-white p-6 shadow-sm dark:bg-slate-900">
@@ -44,7 +77,10 @@ const DashboardHome = () => {
 
           <p className="mt-4 text-sm text-gray-500">Amount Spent</p>
 
-          <h3 className="mt-2 text-4xl font-bold">$2,450</h3>
+          <h3 className="mt-2 text-4xl font-bold">
+            {" "}
+            ${stats?.totalSpent.toFixed(2)}
+          </h3>
         </div>
 
         <div className="rounded-3xl border bg-white p-6 shadow-sm dark:bg-slate-900">

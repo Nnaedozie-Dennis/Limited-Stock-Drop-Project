@@ -8,7 +8,7 @@ import productRoutes from "./routes/product.routes";
 import reservationRoutes from "./routes/reservation.routes";
 import orderRoutes from "./routes/order.routes";
 import { expireReservationsJob } from "./jobs/expireReservations";
-
+import dashboardRoutes from "./routes/dashboard.routes";
 
 const app = express();
 
@@ -28,6 +28,7 @@ app.get("/health", (req, res) => {
 app.use("/api/products", productRoutes);
 app.use("/api/reservations", reservationRoutes);
 app.use("/api/orders", orderRoutes);
+app.use("/api/dashboard", dashboardRoutes);
 
 setInterval(() => {
   expireReservationsJob();
