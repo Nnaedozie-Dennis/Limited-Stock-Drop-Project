@@ -1,10 +1,8 @@
 import { Link } from "react-router-dom";
-
-import Header from "../components/layout/Header";
-import Footer from "../components/layout/Footer";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../lib/supabase";
+import heroShoe from "../assets/images/hero-shoe.png";
 
 
 const Register = () => {
@@ -43,10 +41,11 @@ const Register = () => {
 };
   return (
     <>
-      <Header />
-
-      <main className="flex min-h-screen items-center justify-center px-6 py-20">
+      <main className="flex min-h-screen items-center justify-center px-6 py-10">
         <div className="w-full max-w-md rounded-3xl border p-8">
+          <div className="w-20 m-auto border-green-600 p-2 rounded-full mb-4 bg-white border-4">
+            <img src={heroShoe} alt="" />
+          </div>
           <h1 className="text-center text-4xl font-bold">Create Account</h1>
 
           <p className="mt-4 text-center text-gray-500">
@@ -85,8 +84,9 @@ const Register = () => {
             />
 
             <button
-            type="submit"
-            className="w-full rounded-full bg-black py-4 text-white dark:bg-white dark:text-black">
+              type="submit"
+              className="w-full rounded-full bg-black py-4 text-white dark:bg-white dark:text-black"
+            >
               Create Account
             </button>
           </form>
@@ -100,8 +100,6 @@ const Register = () => {
           </div>
         </div>
       </main>
-
-      <Footer />
     </>
   );
 };

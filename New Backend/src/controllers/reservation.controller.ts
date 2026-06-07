@@ -161,6 +161,7 @@ export const createReservation = async (req: Request, res: Response) => {
       .from("products")
       .select("*")
       .eq("id", productId)
+      
       .single();
 
     if (productError || !product) {
@@ -237,6 +238,7 @@ export const getReservationById = async (req: Request, res: Response) => {
     `,
     )
     .eq("id", id)
+    // .eq("user_id", req.user.id)
     .single();
 
   if (error) {

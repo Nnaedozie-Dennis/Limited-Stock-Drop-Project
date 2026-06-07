@@ -95,6 +95,7 @@ export const getOrderById = async (req: any, res: any) => {
     .from("orders")
     .select("*")
     .eq("id", id)
+    .eq("user_id", req.user.id)
     .single();
 
   if (error) {

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../lib/supabase";
+import heroShoe from "../assets/images/hero-shoe.png";
 
 const ResetPassword = () => {
   const [password, setPassword] = useState("");
@@ -23,6 +24,9 @@ const ResetPassword = () => {
   return (
     <div className="flex min-h-screen items-center justify-center">
       <div className="w-full max-w-md rounded-3xl border p-8">
+        <div className="w-20 m-auto border-green-600 p-2 rounded-full mb-4 bg-white border-4">
+          <img src={heroShoe} alt="" />
+        </div>
         <h1 className="text-3xl font-bold">Set New Password</h1>
 
         <input

@@ -4,7 +4,6 @@ import Shop from "../pages/Shop";
 import About from "../pages/About";
 import Contact from "../pages/Contact";
 import ProductDetails from "../pages/ProductDetails";
-// import ReserveProduct from "../pages/ReserveProduct";
 import Checkout from "../pages/Checkout";
 import OrderSuccess from "../pages/OrderSuccess";
 import ReservationDetails from "../pages/ReservationDetails";
@@ -21,6 +20,17 @@ import ProtectedRoute from "./ProtectedRoute";
 import ResetPassword from "../pages/ResetPassword";
 
 
+
+
+
+// import AdminLayout from "../layouts/AdminLayout";
+// import AdminDashboard from "../pages/admin/AdminDashboard";
+// import AdminProducts from "../pages/admin/AdminProducts";
+// import AdminOrders from "../pages/admin/AdminOrders";
+// import AdminReservations from "../pages/admin/AdminReservations";
+// import AdminUsers from "../pages/admin/AdminUsers";
+
+
 const AppRoutes = () => {
   return (
     <Routes>
@@ -29,9 +39,6 @@ const AppRoutes = () => {
       <Route path="/about" element={<About />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/products/:id" element={<ProductDetails />} />
-      {/* <Route path="/reserve/:id" element={<ReserveProduct />} /> */}
-      {/* <Route path="/checkout" element={<Checkout />} />
-      <Route path="/order-success" element={<OrderSuccess />} /> */}
       <Route path="/order-success/:orderId" element={<OrderSuccess />} />
       <Route path="/checkout/:reservationId" element={<Checkout />} />
       <Route path="/reservation/:id" element={<ReservationDetails />} />
@@ -57,6 +64,18 @@ const AppRoutes = () => {
 
         <Route path="profile" element={<Profile />} />
       </Route>
+
+      {/* <Route path="/admin" element={<AdminLayout />}>
+        <Route index element={<AdminDashboard />} />
+
+        <Route path="products" element={<AdminProducts />} />
+
+        <Route path="orders" element={<AdminOrders />} />
+
+        <Route path="reservations" element={<AdminReservations />} />
+
+        <Route path="users" element={<AdminUsers />} />
+      </Route> */}
     </Routes>
   );
 };

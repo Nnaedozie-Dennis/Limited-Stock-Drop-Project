@@ -189,7 +189,11 @@ const Checkout = () => {
   }, [reservationId]);
 
   if (!reservation) {
-    return <div>Loading...</div>;
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        Loading Checkout...
+      </div>
+    );
   }
 
   return (
@@ -197,7 +201,7 @@ const Checkout = () => {
       <Header />
       
 
-      <div className="min-h-screen bg-gray-50 px-6 py-20 dark:bg-slate-950">
+      <div className="min-h-screen bg-gray-50 px-6 py-10 dark:bg-slate-950">
         <div className="mx-auto max-w-4xl rounded-3xl bg-white p-8 shadow-sm dark:bg-slate-900">
           <h1 className="text-4xl font-bold">Checkout</h1>
 

@@ -22,7 +22,7 @@ const steps = [
 const Process = () => {
   return (
     <FadeIn>
-      <section className="py-24">
+      <section className="py-20">
         <Container>
           <div className="text-center">
             <h2 className="text-4xl font-bold">How It Works</h2>
@@ -32,7 +32,7 @@ const Process = () => {
             </p>
           </div>
 
-          <div className="mt-20 grid gap-8 md:grid-cols-3">
+          <div className="mt-12 grid gap-8 md:grid-cols-3">
             {steps.map((step) => (
               <div
                 key={step.number}

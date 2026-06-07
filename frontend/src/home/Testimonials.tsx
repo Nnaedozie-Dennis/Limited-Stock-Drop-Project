@@ -25,7 +25,7 @@ const testimonials = [
 const Testimonials = () => {
   return (
     <FadeIn>
-      <section className="py-24">
+      <section className="py-15">
         <Container>
           <div className="mx-auto max-w-2xl text-center">
             <span className="text-sm font-semibold uppercase tracking-[0.3em] text-gray-500">
@@ -37,7 +37,7 @@ const Testimonials = () => {
             </h2>
           </div>
 
-          <div className="mt-16 grid gap-8 md:grid-cols-3">
+          <div className="mt-10 grid gap-8 md:grid-cols-3">
             {testimonials.map((testimonial) => (
               <div
                 key={testimonial.name}

@@ -49,9 +49,8 @@
 
 
 import { useState } from "react";
-import Header from "../components/layout/Header";
-import Footer from "../components/layout/Footer";
 import { supabase } from "../lib/supabase";
+import heroShoe from "../assets/images/hero-shoe.png";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
@@ -71,10 +70,12 @@ const ForgotPassword = () => {
 
   return (
     <>
-      <Header />
 
       <main className="flex min-h-screen items-center justify-center px-6 py-20">
         <div className="w-full max-w-md rounded-3xl border p-8">
+          <div className="w-20 m-auto border-green-600 p-2 rounded-full mb-4 bg-white border-4">
+                      <img src={heroShoe} alt="" />
+                    </div>
           <h1 className="text-center text-4xl font-bold">Reset Password</h1>
 
           <p className="mt-4 text-center text-gray-500">
@@ -106,7 +107,6 @@ const ForgotPassword = () => {
         </div>
       </main>
 
-      <Footer />
     </>
   );
 };

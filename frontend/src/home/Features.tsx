@@ -35,7 +35,7 @@ const Features = () => {
             </p>
           </div>
 
-          <div className="mt-16 grid gap-8 md:grid-cols-3">
+          <div className="mt-10 grid gap-8 md:grid-cols-3">
             {features.map((feature) => {
               const Icon = feature.icon;
 

@@ -58,11 +58,11 @@ const Header = () => {
             </NavLink>
 
             <NavLink to="/shop" className="font-medium hover:opacity-70">
-              Shop Drop
+              Shop
             </NavLink>
 
             <NavLink to="/about" className="font-medium hover:opacity-70">
-              About Collections
+              About
             </NavLink>
 
             <NavLink to="/contact" className="font-medium hover:opacity-70">

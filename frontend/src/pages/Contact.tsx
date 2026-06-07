@@ -7,7 +7,7 @@ const Contact = () => {
       <Header />
 
       <main className="min-h-screen">
-        <section className="py-24">
+        <section className="py-10">
           <div className="mx-auto max-w-3xl px-6">
             <h1 className="text-5xl font-bold">Contact Us</h1>
 

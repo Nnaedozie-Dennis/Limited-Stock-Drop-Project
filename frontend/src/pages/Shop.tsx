@@ -6,12 +6,20 @@ import { useEffect, useState } from "react";
 import { api } from "../services/api";
 import type { Product } from "../types/product";
 import { Link } from "react-router-dom";
-import Skeleton from "../components/common/Skeleton";
+import ProductCardSkeleton from "../components/skeletons/ProductCardSkeleton";
+
 
 const Shop = () => {
 
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
+  
+const [currentPage, setCurrentPage] = useState(1);
+const productsPerPage = 8;
+const startIndex = (currentPage - 1) * productsPerPage;
+const endIndex = startIndex + productsPerPage;
+const currentProducts = products.slice(startIndex, endIndex);
+const totalPages = Math.ceil(products.length / productsPerPage);
 
 
   useEffect(() => {
@@ -34,21 +42,12 @@ const Shop = () => {
 
 
 
-  if (loading) {
-    return (
-      <div className="flex min-h-screen items-center justify-center">
-        {/* Loading products... */}
-        <Skeleton className="h-125 w-full rounded-3xl" />
-      </div>
-    );
-  }
-
 
   return (
     <>
       <Header />
 
-      <main className="min-h-screen py-24">
+      <main className="min-h-screen py-10">
         <Container>
           <div className="mb-12">
             <h1 className="text-5xl font-bold">Sneaker Collection</h1>
@@ -71,51 +70,71 @@ const Shop = () => {
           </div>
 
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {products.map((product) => (
-              <div
-                key={product.id}
-                className="overflow-hidden rounded-3xl border bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg dark:bg-slate-900"
-              >
-                <img
-                  src={
-                    product.image_url ||
-                    "https://images.unsplash.com/photo-1542291026-7eec264c27ff"
-                  }
-                  alt={product.name}
-                  className="h-64 w-full object-cover"
-                />
+            {loading ? (
+              <div className="grid gap-8 lg:gap-66 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                {[...Array(4)].map((_, index) => (
+                  <ProductCardSkeleton key={index} />
+                ))}
+              </div>
+            ) : (
+              currentProducts.map((product) => (
+                <div
+                  key={product.id}
+                  className="overflow-hidden rounded-3xl border bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg dark:bg-slate-900"
+                >
+                  <img
+                    src={
+                      product.image_url ||
+                      "https://images.unsplash.com/photo-1542291026-7eec264c27ff"
+                    }
+                    alt={product.name}
+                    className="h-64 w-full object-cover"
+                  />
 
-                <div className="p-5">
-                  <h3 className="text-lg font-semibold">{product.name}</h3>
+                  <div className="p-5">
+                    <h3 className="text-lg font-semibold">{product.name}</h3>
 
-                  <p className="mt-2 text-sm text-gray-500">
-                    {product.description}
-                  </p>
+                    <p className="mt-2 text-sm text-gray-500">
+                      {product.description}
+                    </p>
 
-                  <div className="mt-4 flex items-center justify-between">
-                    <span className="text-xl font-bold">${product.price}</span>
+                    <div className="mt-4 flex items-center justify-between">
+                      <span className="text-xl font-bold">
+                        ${product.price}
+                      </span>
 
-                    <span className="text-sm text-gray-500">
-                      Stock: {product.stock}
-                    </span>
-                  </div>
+                      <span className="text-sm text-gray-500">
+                        Stock: {product.stock}
+                      </span>
+                    </div>
 
-                  {/* <button className="mt-5 w-full rounded-full bg-black py-3 text-white transition hover:opacity-90 dark:bg-white dark:text-black">
+                    {/* <button className="mt-5 w-full rounded-full bg-black py-3 text-white transition hover:opacity-90 dark:bg-white dark:text-black">
           Reserve
         </button> */}
-                  <Link
-                    to={`/products/${product.id}`}
-                    className="mt-5 block w-full rounded-full bg-black py-3 text-center text-white transition hover:opacity-90 dark:bg-white dark:text-black"
-                  >
-                    View Details
-                  </Link>
+                    <Link
+                      to={`/products/${product.id}`}
+                      className="mt-5 block w-full rounded-full bg-black py-3 text-center text-white transition hover:opacity-90 dark:bg-white dark:text-black"
+                    >
+                      View Details
+                    </Link>
+                  </div>
                 </div>
-              </div>
-            ))}
-            
+              ))
+            )}
           </div>
-
-          {/* <ProductCard product={product} /> */}
+          <div className="mt-10 flex justify-center gap-3 ">
+            {[...Array(totalPages)].map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentPage(index + 1)}
+                className={`rounded-full px-4 py-2 border cursor-pointer  ${
+                  currentPage === index + 1 ? "bg-black text-white" : ""
+                }`}
+              >
+                {index + 1}
+              </button>
+            ))}
+          </div>
         </Container>
       </main>
 

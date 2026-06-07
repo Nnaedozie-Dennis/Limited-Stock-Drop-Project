@@ -50,7 +50,8 @@
 
 
 
-
+import Header from "../components/layout/Header";
+import Footer from "../components/layout/Footer";
 import { CheckCircle } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
 
@@ -58,39 +59,45 @@ const OrderSuccess = () => {
   const { orderId } = useParams();
 
   return (
-    <div className="min-h-screen bg-gray-50 px-6 py-20 dark:bg-slate-950">
-      <div className="mx-auto max-w-3xl rounded-3xl bg-white p-10 text-center shadow-sm dark:bg-slate-900">
-        <CheckCircle size={80} className="mx-auto text-green-500" />
+    <>
+      <Header />
 
-        <h1 className="mt-6 text-4xl font-bold">Order Confirmed</h1>
+      <div className="min-h-screen bg-gray-50 px-6 py-10 dark:bg-slate-950">
+        <div className="mx-auto max-w-3xl rounded-3xl bg-white p-10 text-center shadow-sm dark:bg-slate-900">
+          <CheckCircle size={80} className="mx-auto text-green-500" />
 
-        <p className="mt-4 text-gray-500">
-          Thank you for your purchase. Your order has been successfully placed.
-        </p>
+          <h1 className="mt-6 text-4xl font-bold">Order Confirmed</h1>
 
-        <div className="mt-10 rounded-2xl border p-6 text-left">
-          <p className="text-sm text-gray-500">Order ID</p>
+          <p className="mt-4 text-gray-500">
+            Thank you for your purchase. Your order has been successfully
+            placed.
+          </p>
 
-          <p className="mt-2 break-all font-semibold">{orderId}</p>
-        </div>
+          <div className="mt-10 rounded-2xl border p-6 text-left">
+            <p className="text-sm text-gray-500">Order ID</p>
 
-        <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:justify-center">
-          <Link
-            to="/dashboard/orders"
-            className="rounded-full bg-black px-8 py-4 text-white transition hover:opacity-90 dark:bg-white dark:text-black"
-          >
-            View Orders
-          </Link>
+            <p className="mt-2 break-all font-semibold">{orderId}</p>
+          </div>
 
-          <Link
-            to="/shop"
-            className="rounded-full border px-8 py-4 transition hover:bg-gray-100 dark:hover:bg-slate-800"
-          >
-            Continue Shopping
-          </Link>
+          <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:justify-center">
+            <Link
+              to="/dashboard/orders"
+              className="rounded-full bg-black px-8 py-4 text-white transition hover:opacity-90 dark:bg-white dark:text-black"
+            >
+              View Orders
+            </Link>
+
+            <Link
+              to="/shop"
+              className="rounded-full border px-8 py-4 transition hover:bg-gray-100 dark:hover:bg-slate-800"
+            >
+              Continue Shopping
+            </Link>
+          </div>
         </div>
       </div>
-    </div>
+      <Footer />
+    </>
   );
 };
 

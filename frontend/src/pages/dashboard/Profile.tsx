@@ -206,7 +206,7 @@ const uploadAvatar = async (event: React.ChangeEvent<HTMLInputElement>) => {
 
         <button
           onClick={saveProfile}
-          className="mt-8 rounded-full bg-black px-8 py-4 text-white transition hover:opacity-90 dark:bg-white dark:text-black"
+          className="mt-8 rounded-full bg-black px-8 py-4 text-white transition hover:opacity-90 dark:bg-white dark:text-black cursor-pointer"
         >
           Save Changes
         </button>
