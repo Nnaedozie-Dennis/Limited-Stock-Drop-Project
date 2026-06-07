@@ -16,7 +16,7 @@ const Register = () => {
   const [fullName, setFullName] = useState("");
 
   const handleRegister = async () => {
-  const { error } = await supabase.auth.signUp({
+  const { data, error } = await supabase.auth.signUp({
     email,
     password,
     options: {
@@ -30,6 +30,14 @@ const Register = () => {
     console.log(error.message);
     return;
   }
+  
+  if (data.user) {
+  await supabase.from("profiles").insert({
+    id: data.user.id,
+    email,
+    full_name: fullName,
+  });
+}
 
   navigate("/login");
 };

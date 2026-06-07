@@ -1,7 +1,7 @@
-import { Moon, Sun, ShoppingBag, Menu, X, User} from "lucide-react";
+import { Moon, Sun, ShoppingBag, Menu, X} from "lucide-react";
 import { useTheme } from "../../context/ThemeContext";
 import { NavLink } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {useAuth} from "../../context/AuthContext"
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../../lib/supabase";
@@ -22,6 +22,24 @@ const Header = () => {
 
     navigate("/");
   };
+
+  const [profile, setProfile] = useState<any>(null);
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      if (!user) return;
+
+      const { data } = await supabase
+        .from("profiles")
+        .select("*")
+        .eq("id", user.id)
+        .single();
+
+      setProfile(data);
+    };
+
+    fetchProfile();
+  }, [user]);
 
   return (
     <>
@@ -65,11 +83,22 @@ const Header = () => {
               <div className="relative">
                 <button
                   onClick={() => setShowUserMenu(!showUserMenu)}
-                  className="flex h-10 w-10 items-center justify-center rounded-full bg-black text-white dark:bg-white dark:text-black"
+                  className="flex h-10 w-10 items-center justify-center rounded-full font-bold bg-black text-white dark:bg-white dark:text-black"
                 >
-                  <User size={18} />
+                  {/* <User size={18} /> */}
                   {/* {user.user_metadata?.fullname?.charAt(0)?.toUpperCase() ||
                     "U"} */}
+                  {profile?.avatar_url ? (
+                    <img
+                      src={profile.avatar_url}
+                      alt="avatar"
+                      className="h-10 w-10 rounded-full object-cover"
+                    />
+                  ) : (
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-200 font-semibold">
+                      {user?.user_metadata?.full_name?.charAt(0).toUpperCase()}
+                    </div>
+                  )}
                 </button>
 
                 {showUserMenu && (
@@ -207,11 +236,25 @@ const Header = () => {
                   <div className="flex items-center gap-3">
                     <button
                       onClick={() => setShowUserMenu(!showUserMenu)}
-                      className="flex h-10 w-10 items-center justify-center rounded-full bg-black text-white dark:bg-white dark:text-black"
+                      className="flex h-10 w-10 items-center justify-center rounded-full font-bold bg-black text-white dark:bg-white dark:text-black"
                     >
-                      <User size={18} />
+                      {/* <User size={18} /> */}
                       {/* {user.user_metadata?.fullname?.charAt(0)?.toUpperCase() ||
                         "U"} */}
+                      {/* {user.user_metadata?.full_name?.charAt(0).toUpperCase()} */}
+                      {profile?.avatar_url ? (
+                        <img
+                          src={profile.avatar_url}
+                          alt="avatar"
+                          className="h-10 w-10 rounded-full object-cover"
+                        />
+                      ) : (
+                        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-200 font-semibold">
+                          {user?.user_metadata?.full_name
+                            ?.charAt(0)
+                            .toUpperCase()}
+                        </div>
+                      )}
                     </button>
                     <p className="font-medium">User Profile </p>
                   </div>
