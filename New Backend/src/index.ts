@@ -12,13 +12,16 @@ import dashboardRoutes from "./routes/dashboard.routes";
 
 const app = express();
 
-app.use(cors());
-// app.use(
-//   cors({
-//     origin: ["http://localhost:5173", "http://localhost:3000"], // Vite default + React
-//     credentials: true,
-//   }),
-// );
+// app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173", 
+      "https://aetherrr-project.vercel.app/",
+    ],
+    credentials: true,
+  }),
+);
 app.use(express.json());
 
 app.get("/health", (req, res) => {
