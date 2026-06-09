@@ -83,6 +83,7 @@ const totalPages = Math.ceil(products.length / productsPerPage);
                   className="overflow-hidden rounded-3xl border bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg dark:bg-slate-900"
                 >
                   <img
+                    loading="lazy"
                     src={
                       product.image_url ||
                       "https://images.unsplash.com/photo-1542291026-7eec264c27ff"

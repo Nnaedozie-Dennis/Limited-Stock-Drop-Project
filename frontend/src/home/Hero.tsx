@@ -66,6 +66,7 @@ const Hero = () => {
 
             <div className="relative">
               <img
+                loading="lazy"
                 src={heroShoe}
                 alt="Aether Sneaker"
                 className="md:mx-auto md:max-w-xl drop-shadow-2xl"

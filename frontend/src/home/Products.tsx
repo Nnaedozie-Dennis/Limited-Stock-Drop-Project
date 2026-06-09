@@ -62,6 +62,7 @@ const Products = () => {
             >
               <div className="h-72 overflow-hidden">
                 <img
+                  loading="lazy"
                   src={product.image_url}
                   alt={product.name}
                   className="h-full w-full object-cover transition duration-500 hover:scale-110"
