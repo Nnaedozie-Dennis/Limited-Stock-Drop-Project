@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Container from "../components/common/Container";
 import { api } from "../services/api";
 import type { Product } from "../types/product";
+import ProductSkeleton from "../components/skeletons/ProductSkeleton";
 
 const Products = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -30,17 +31,6 @@ const Products = () => {
     ),
   );
 
-  if (loading) {
-    return (
-      <section className="py-15">
-        <Container>
-          <div className="text-center">
-            <h2 className="text-4xl font-bold">Loading Products...</h2>
-          </div>
-        </Container>
-      </section>
-    );
-  }
 
   return (
     <section className="py-15">
@@ -54,10 +44,17 @@ const Products = () => {
         </div>
 
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {featuredProducts.map((product) => (
+          {loading ? (
+    <>
+      <ProductSkeleton />
+      <ProductSkeleton />
+      <ProductSkeleton />
+    </>
+  ) : (
+          featuredProducts.map((product) => (
             <Link
               key={product.id}
-              to={`/product/${product.id}`}
+              to={`/products/${product.id}`}
               className="overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm transition hover:-translate-y-2 hover:shadow-2xl dark:border-slate-700 dark:bg-slate-800"
             >
               <div className="h-72 overflow-hidden">
@@ -88,7 +85,7 @@ const Products = () => {
                 </div>
               </div>
             </Link>
-          ))}
+          )))}
         </div>
       </Container>
     </section>

@@ -3,6 +3,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../lib/supabase";
 import heroShoe from "../assets/images/hero-shoe.png";
+import { toast } from "react-toastify";
+import { Eye, EyeOff } from "lucide-react";
+
 
 
 const Register = () => {
@@ -12,8 +15,16 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  // const [errorMessage, setErrorMessage] = useState("");
+  
 
   const handleRegister = async () => {
+
+      setLoading(true);
+      // setErrorMessage("");
+
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
@@ -25,18 +36,20 @@ const Register = () => {
   });
 
   if (error) {
-    console.log(error.message);
+    toast.error(error.message);
+    setLoading(false);
     return;
   }
   
   if (data.user) {
-  await supabase.from("profiles").insert({
+    await supabase.from("profiles").insert({
     id: data.user.id,
     email,
     full_name: fullName,
   });
 }
-
+  toast.success("Account created successfully");
+  setLoading(false);
   navigate("/login");
 };
   return (
@@ -75,19 +88,30 @@ const Register = () => {
               className="w-full rounded-2xl border p-4"
             />
 
-            <input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full rounded-2xl border p-4"
-            />
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full rounded-2xl border p-4 pr-12"
+              />
+
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-black cursor-pointer"
+              >
+                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+              </button>
+            </div>
 
             <button
               type="submit"
-              className="w-full rounded-full bg-black py-4 text-white dark:bg-white dark:text-black"
+              disabled={loading}
+              className="w-full rounded-full bg-black py-4 text-white disabled:opacity-50 dark:bg-white dark:text-black cursor-pointer"
             >
-              Create Account
+              {loading ? "Creating Account..." : "Create Account"}
             </button>
           </form>
 
