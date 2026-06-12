@@ -11,16 +11,22 @@ import ProductCardSkeleton from "../components/skeletons/ProductCardSkeleton";
 
 const Shop = () => {
 
-  const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
-  
+const [products, setProducts] = useState<Product[]>([]);
+const [loading, setLoading] = useState(true);
 const [currentPage, setCurrentPage] = useState(1);
 const productsPerPage = 8;
 const startIndex = (currentPage - 1) * productsPerPage;
 const endIndex = startIndex + productsPerPage;
-const currentProducts = products.slice(startIndex, endIndex);
-const totalPages = Math.ceil(products.length / productsPerPage);
 
+const [selectedBrand, setSelectedBrand] = useState("All");
+const filteredProducts =
+  selectedBrand === "All"
+    ? products
+    : products.filter((product) => product.brand === selectedBrand);
+
+const currentProducts = filteredProducts.slice(startIndex, endIndex);
+
+const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -57,16 +63,21 @@ const totalPages = Math.ceil(products.length / productsPerPage);
             </p>
           </div>
 
-          <div className="mb-12 flex flex-wrap gap-4">
-            <button className="rounded-full border px-5 py-2">All</button>
-
-            <button className="rounded-full border px-5 py-2">Nike</button>
-
-            <button className="rounded-full border px-5 py-2">Jordan</button>
-
-            <button className="rounded-full border px-5 py-2">
-              New Balance
-            </button>
+          <div className="mb-12 flex flex-wrap gap-4 ">
+            {["All", "Nike", "Jordan", "New Balance", "Adidas"].map((brand) => (
+              <button
+                key={brand}
+                onClick={() => {
+                  setSelectedBrand(brand);
+                  setCurrentPage(1);
+                }}
+                className={`rounded-full border px-5 py-2 cursor-pointer ${
+                  selectedBrand === brand ? "bg-black text-white" : ""
+                }`}
+              >
+                {brand}
+              </button>
+            ))}
           </div>
 
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -95,7 +106,7 @@ const totalPages = Math.ceil(products.length / productsPerPage);
                   <div className="p-5">
                     <h3 className="text-lg font-semibold">{product.name}</h3>
 
-                    <p className="mt-2 text-sm text-gray-500">
+                    <p className="mt-2 text-sm text-gray-500 line-clamp-2">
                       {product.description}
                     </p>
 

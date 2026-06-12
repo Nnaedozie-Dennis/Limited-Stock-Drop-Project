@@ -5,10 +5,14 @@ import { api } from "../services/api";
 import { useEffect, useState } from "react";
 import type { Reservation } from "../types/reservation";
 import useTimer from "../hooks/useTimer";
+import { ClipLoader } from "react-spinners";
+import { toast } from "react-toastify";
+
 
 const ReservationDetails = () => {
   const { id } = useParams();
   const [reservation, setReservation] = useState<Reservation | null>(null);
+  // const navigate = useNavigate();
 
 
   useEffect(() => {
@@ -18,9 +22,13 @@ const ReservationDetails = () => {
 
         setReservation(res.data.reservation);
       } catch (error) {
-        console.error(error);
+        toast.error("Reservation expired");
       }
     };
+    // setTimeout(() => {
+    //   navigate("/shop");
+    // }, 3000);
+
 
     fetchReservation();
   }, [id]);
@@ -32,7 +40,7 @@ const ReservationDetails = () => {
   if (!reservation) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        Loading reservation...
+        <ClipLoader size={20} color="#fff" />
       </div>
     );
   }

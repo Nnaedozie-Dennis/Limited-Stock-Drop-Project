@@ -40,7 +40,14 @@ const AppRoutes = () => {
       <Route path="/contact" element={<Contact />} />
       <Route path="/products/:id" element={<ProductDetails />} />
       <Route path="/order-success/:orderId" element={<OrderSuccess />} />
-      <Route path="/checkout/:reservationId" element={<Checkout />} />
+      <Route
+        path="/checkout/:reservationId"
+        element={
+          <ProtectedRoute>
+            <Checkout />
+          </ProtectedRoute>
+        }
+      />
       <Route path="/reservation/:id" element={<ReservationDetails />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />

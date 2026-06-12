@@ -148,12 +148,16 @@ import Footer from "../components/layout/Footer";
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { api } from "../services/api";
+import { useAuth } from "../context/AuthContext";
+import { toast } from "react-toastify";
+import { ClipLoader } from "react-spinners";
 
 
 const Checkout = () => {
   const { reservationId } = useParams();
   const [reservation, setReservation] = useState<any>(null);
   const navigate = useNavigate();
+  const { user } = useAuth();
   console.log(reservation);
 
 
@@ -165,18 +169,17 @@ const Checkout = () => {
 
       navigate(`/order-success/${res.data.order.id}`);
     } catch (error) {
-      console.error(error);
+      toast.error("Checkout failed");
     }
   };
 
 
-// const handleCheckout = async () => {
-//   const res = await api.post("/orders/checkout", {
-//     reservationId,
-//   });
-
-//   navigate(`/order-success/${res.data.order.id}`);
-// };
+useEffect(() => {
+  if (!user) {
+    toast.error("Please login before checkout");
+    navigate("/login");
+  }
+}, [user, navigate]);
 
   useEffect(() => {
     const fetchReservation = async () => {
@@ -191,7 +194,7 @@ const Checkout = () => {
   if (!reservation) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        Loading Checkout...
+        <ClipLoader size={20} color="#fff" />
       </div>
     );
   }
@@ -248,7 +251,7 @@ const Checkout = () => {
 
           <button
             onClick={handleCheckout}
-            className="mt-10 w-full rounded-full bg-black py-4 text-white transition hover:opacity-90 dark:bg-white dark:text-black"
+            className="mt-10 w-full rounded-full bg-black py-4 text-white transition hover:opacity-90 dark:bg-white dark:text-black cursor-pointer"
           >
             Complete Purchase
           </button>

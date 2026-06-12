@@ -6,6 +6,7 @@ import Container from "../components/common/Container";
 import { api } from "../services/api";
 import type { Product } from "../types/product";
 import ProductDetailsSkeleton from "../components/skeletons/ProductDetailsSkeleton";
+import { toast } from "react-toastify";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -18,6 +19,11 @@ const ProductDetails = () => {
     const handleReserve = async () => {
       if (!product) return;
 
+      if (product.stock <= 0) {
+        toast.error("This product is out of stock.");
+        return;
+      }
+
       try {
         const res = await api.post("/reservations", {
           productId: product.id,
@@ -27,6 +33,7 @@ const ProductDetails = () => {
         navigate(`/reservation/${res.data.reservation.id}`);
       } catch (error) {
         console.error(error);
+        toast.error("Unable to reserve product.");
       }
     };
 
@@ -118,9 +125,17 @@ const ProductDetails = () => {
                 </div>
               </div>
               <div className="flex items-center gap-6  mt-14">
-                <div >
-                  <span className="text-sm rounded-full bg-green-100 px-8 py-5 text-green-700">
-                    Available Stock: {product.stock}
+                <div>
+                  <span
+                    className={`text-sm rounded-full px-8 py-5 ${
+                      product.stock > 0
+                        ? "bg-green-100 text-green-700"
+                        : "bg-red-100 text-red-700"
+                    }`}
+                  >
+                    {product.stock > 0
+                      ? `Available Stock: ${product.stock}`
+                      : "Out of Stock"}
                   </span>
                 </div>
 
