@@ -1,5 +1,11 @@
 import { useState } from "react";
 import { NavLink, Outlet } from "react-router-dom";
+// import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { supabase } from "../lib/supabase";
+
+
 import {
   LayoutDashboard,
   ShoppingBag,
@@ -12,6 +18,14 @@ import {
 
 const DashboardLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+    const handleLogout = async () => {
+      await supabase.auth.signOut();
+
+      navigate("/");
+    };
+
+  const navigate = useNavigate();
+
 
   const navLinks = (
     <>
@@ -76,7 +90,10 @@ const DashboardLayout = () => {
         Profile
       </NavLink>
 
-      <button className="flex w-full items-center gap-3 rounded-xl p-3 text-red-500 transition hover:bg-red-50">
+      <button
+        onClick={handleLogout}
+        className="flex w-full items-center gap-3 rounded-xl p-3 text-red-500 transition hover:bg-red-50 cursor-pointer"
+      >
         <LogOut size={20} />
         Logout
       </button>
@@ -89,7 +106,9 @@ const DashboardLayout = () => {
         {/* Desktop Sidebar */}
         <aside className="hidden border-r bg-white lg:block dark:bg-slate-900">
           <div className="p-6">
-            <h2 className="text-2xl font-bold">Aether</h2>
+            <Link to="/">
+              <h2 className="text-2xl font-bold">Aether</h2>
+            </Link>
           </div>
 
           <nav className="space-y-2 px-4">{navLinks}</nav>
@@ -105,7 +124,9 @@ const DashboardLayout = () => {
 
             <aside className="fixed left-0 top-0 z-50 h-screen w-70 bg-white p-6 shadow-xl dark:bg-slate-900">
               <div className="mb-8 flex items-center justify-between">
-                <h2 className="text-2xl font-bold">Aether</h2>
+                <Link to="/">
+                  <h2 className="text-2xl font-bold">Aether</h2>
+                </Link>
 
                 <button onClick={() => setSidebarOpen(false)}>
                   <X size={24} />
@@ -123,7 +144,7 @@ const DashboardLayout = () => {
           <div className="mb-8 flex items-center justify-between lg:hidden">
             <button
               onClick={() => setSidebarOpen(true)}
-              className="rounded-lg border p-2"
+              className="rounded-lg border p-2 cursor-pointer"
             >
               <Menu size={22} />
             </button>

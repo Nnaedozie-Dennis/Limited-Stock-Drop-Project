@@ -205,10 +205,10 @@ useEffect(() => {
       
 
       <div className="min-h-screen bg-gray-50 px-6 py-10 dark:bg-slate-950">
-        <div className="mx-auto max-w-4xl rounded-3xl bg-white p-8 shadow-sm dark:bg-slate-900">
-          <h1 className="text-4xl font-bold">Checkout</h1>
+        <div className="mx-auto max-w-4xl rounded-3xl bg-white p-8 shadow-sm dark:bg-slate-900 ">
+          <h1 className="text-4xl font-bold text-center">Checkout</h1>
 
-          <p className="mt-2 text-gray-500">
+          <p className="mt-2 text-gray-500 text-center">
             Complete your purchase before your reservation expires.
           </p>
 

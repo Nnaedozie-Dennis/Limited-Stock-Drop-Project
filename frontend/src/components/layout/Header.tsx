@@ -48,7 +48,9 @@ const Header = () => {
           {/* Logo */}
           <div className="flex items-center gap-2">
             <ShoppingBag size={24} />
-            <span className="text-xl font-bold tracking-tight">Aether</span>
+            <NavLink to="/">
+              <span className="text-xl font-bold tracking-tight">Aether</span>
+            </NavLink>
           </div>
 
           {/* Desktop Navigation */}
@@ -168,7 +170,10 @@ const Header = () => {
           </div>
 
           {/* Mobile Menu Button */}
-          <button onClick={() => setIsOpen(true)} className="lg:hidden">
+          <button
+            onClick={() => setIsOpen(true)}
+            className="lg:hidden cursor-pointer"
+          >
             <Menu size={28} />
           </button>
         </div>
@@ -185,9 +190,14 @@ const Header = () => {
           {/* Mobile Drawer */}
           <div className="fixed right-0 top-0 z-50 h-screen w-70 bg-white p-6 shadow-xl dark:bg-slate-900">
             <div className="flex items-center justify-between">
-              <h2 className="text-xl font-bold">Aether</h2>
+              <NavLink to="/">
+                <h2 className="text-xl font-bold">Aether</h2>
+              </NavLink>
 
-              <button onClick={() => setIsOpen(false)}>
+              <button
+                onClick={() => setIsOpen(false)}
+                className="cursor-pointer"
+              >
                 <X size={24} />
               </button>
             </div>
@@ -236,7 +246,7 @@ const Header = () => {
                   <div className="flex items-center gap-3">
                     <button
                       onClick={() => setShowUserMenu(!showUserMenu)}
-                      className="flex h-10 w-10 items-center justify-center rounded-full font-bold bg-black text-white dark:bg-white dark:text-black"
+                      className="flex h-10 w-10 items-center justify-center rounded-full font-bold bg-black text-white dark:bg-white dark:text-black cursor-pointer"
                     >
                       {/* <User size={18} /> */}
                       {/* {user.user_metadata?.fullname?.charAt(0)?.toUpperCase() ||
@@ -246,7 +256,7 @@ const Header = () => {
                         <img
                           src={profile.avatar_url}
                           alt="avatar"
-                          className="h-10 w-10 rounded-full object-cover"
+                          className="h-10 w-10 rounded-full object-cover "
                         />
                       ) : (
                         <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-200 font-semibold">
@@ -260,7 +270,7 @@ const Header = () => {
                   </div>
 
                   {showUserMenu && (
-                    <div className="absolute right-0 mt-3 w-56 rounded-2xl border bg-white p-2 shadow-lg dark:bg-slate-900">
+                    <div className="absolute right-0 mt-3 w-56 rounded-2xl border bg-white p-2 shadow-lg dark:bg-slate-900 cursor-pointer">
                       <div className="border-b p-3">
                         <p className="font-medium">
                           {user.user_metadata?.fullname || "User"}

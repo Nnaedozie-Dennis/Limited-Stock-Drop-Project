@@ -2,6 +2,8 @@ import { useState } from "react";
 import { supabase } from "../lib/supabase";
 import heroShoe from "../assets/images/hero-shoe.png";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
+
 
 
 const ForgotPassword = () => {
@@ -34,7 +36,9 @@ const ForgotPassword = () => {
       <main className="flex min-h-screen items-center justify-center px-6 py-20">
         <div className="w-full max-w-md rounded-3xl border p-8">
           <div className="w-20 m-auto border-green-600 p-2 rounded-full mb-4 bg-white border-4">
+            <Link to="/">
             <img src={heroShoe} alt="" />
+            </Link>
           </div>
           <h1 className="text-center text-4xl font-bold">Reset Password</h1>
 

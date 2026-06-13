@@ -7,6 +7,7 @@ import { api } from "../services/api";
 import type { Product } from "../types/product";
 import ProductDetailsSkeleton from "../components/skeletons/ProductDetailsSkeleton";
 import { toast } from "react-toastify";
+// import BackButton from "../components/common/BackButton";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -74,8 +75,11 @@ const ProductDetails = () => {
     <>
       <Header />
 
-      <main className="py-15">
+      <main className="py-12">
         <Container>
+          {/* <div className="flex items-start mt-[-50px]">
+            <BackButton />
+          </div> */}
           <div className="grid gap-8 md:gap-12 lg:grid-cols-2">
             <div>
               <img

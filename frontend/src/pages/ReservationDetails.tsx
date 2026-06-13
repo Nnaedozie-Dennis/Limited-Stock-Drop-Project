@@ -7,6 +7,7 @@ import type { Reservation } from "../types/reservation";
 import useTimer from "../hooks/useTimer";
 import { ClipLoader } from "react-spinners";
 import { toast } from "react-toastify";
+import BackButton from "../components/common/BackButton";
 
 
 const ReservationDetails = () => {
@@ -51,104 +52,33 @@ const ReservationDetails = () => {
       <Header />
 
       <div className="min-h-screen bg-gray-50 px-6 py-10 dark:bg-slate-950">
-        {/* <div className="mx-auto max-w-3xl rounded-3xl bg-white p-8 shadow-sm dark:bg-slate-900">
-        <div className="text-center">
-          <div className="mb-6 text-6xl">🎉</div>
-
-          <h1 className="text-4xl font-bold">Reservation Successful</h1>
-          <p>Status: {reservation?.status}</p>
-
-          <p className="mt-4 text-gray-500">Your sneaker has been reserved.</p>
-        </div>
-
-        <div className="mt-10 rounded-2xl border p-6">
-          <p className="text-sm text-gray-500">Reservation ID</p>
-
-          <p className="mt-2 font-semibold break-all">{id}</p>
-        </div>
-
-        <div className="mt-10">
-          <h2 className="text-lg font-semibold">Time Remaining</h2>
-
-          <p
-            className={`mt-3 text-5xl font-bold ${
-              expired ? "text-red-500" : ""
-            }`}
-          >
-            {String(minutes).padStart(2, "0")}:
-            {String(seconds).padStart(2, "0")}
-          </p>
-          {expired && (
-            <div className="mt-4 rounded-2xl border border-red-200 bg-red-50 p-4 text-red-600">
-              This reservation has expired.
-            </div>
-          )}
-        </div>
-
-
-        <p>
-          Quantity: 
-          {reservation.quantity}
-        </p>
-
-        <p>
-          Expires: 
-          {new Date(reservation.expires_at).toLocaleString()}
-        </p>
-
-        {!expired ? (
-          <Link
-            to={`/checkout/${reservation.id}`}
-            className="mt-10 block rounded-full bg-black py-4 text-center text-white dark:bg-white dark:text-black"
-          >
-            Proceed to Checkout
-          </Link>
-        ) : (
-          <button
-            disabled
-            className="mt-10 w-full cursor-not-allowed rounded-full bg-gray-300 py-4"
-          >
-            Reservation Expired
-          </button>
-        )}
-
-        <div className="mt-8 rounded-3xl border border-amber-300 bg-amber-50 p-6 dark:bg-transparent">
-                <h3 className="font-semibold">Reservation Policy</h3>
-
-                <ul className="mt-4 space-y-2 text-sm text-gray-600 dark:text-gray-400">
-                  <li>• Reservation lasts 5 minutes</li>
-
-                  <li>• Stock is temporarily locked</li>
-
-                  <li>• Expired reservations return stock</li>
-
-                  <li>• Checkout before timer ends</li>
-                </ul>
-              </div>
-      </div> */}
-
         <div className="mx-auto max-w-4xl rounded-3xl bg-white p-6 shadow-sm dark:bg-slate-900 md:p-10">
-          {/* Success Header */}
-          <div className="text-center">
-            <h1 className="text-3xl font-bold md:text-4xl">
-              Reservation Successful
-            </h1>
+          <div className="flex">
+            {/* <div className="">
+              <BackButton />
+            </div> */}
+            {/* Success Header */}
+            <div className="text-center flex-1">
+              <h1 className="text-3xl font-bold md:text-4xl">
+                Reservation Successful
+              </h1>
 
-            <p className="mt-3 text-gray-500">
-              Your sneaker has been reserved successfully.
-            </p>
+              <p className="mt-3 text-gray-500">
+                Your sneaker has been reserved successfully.
+              </p>
 
-            <span
-              className={`mt-5 inline-block rounded-full px-4 py-2 text-sm font-medium ${
-                reservation.status === "PENDING"
-                  ? "bg-yellow-100 text-yellow-700"
-                  : reservation.status === "COMPLETED"
-                    ? "bg-green-100 text-green-700"
-                    : "bg-red-100 text-red-700"
-              }`}
-            >
-              {reservation.status}
-            </span>
+              <span
+                className={`mt-5 inline-block rounded-full px-4 py-2 text-sm font-medium ${
+                  reservation.status === "PENDING"
+                    ? "bg-yellow-100 text-yellow-700"
+                    : reservation.status === "COMPLETED"
+                      ? "bg-green-100 text-green-700"
+                      : "bg-red-100 text-red-700"
+                }`}
+              >
+                {reservation.status}
+              </span>
+            </div>
           </div>
 
           {/* Product Card */}

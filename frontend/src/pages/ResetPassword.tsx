@@ -4,6 +4,8 @@ import { supabase } from "../lib/supabase";
 import heroShoe from "../assets/images/hero-shoe.png";
 import { toast } from "react-toastify";
 import { Eye, EyeOff } from "lucide-react";
+import { Link } from "react-router-dom";
+
 
 
 const ResetPassword = () => {
@@ -36,7 +38,9 @@ const ResetPassword = () => {
     <div className="flex min-h-screen items-center justify-center">
       <div className="w-full max-w-md rounded-3xl border p-8">
         <div className="w-20 m-auto border-green-600 p-2 rounded-full mb-4 bg-white border-4">
+          <Link to="/">
           <img src={heroShoe} alt="" />
+          </Link>
         </div>
         <h1 className="text-3xl font-bold">Set New Password</h1>
 
