@@ -53,7 +53,7 @@ const Reservations = () => {
 
       <div className="mt-8 overflow-hidden rounded-3xl border bg-white shadow-sm dark:bg-slate-900">
         <div className="overflow-x-auto">
-          <table className="w-full min-w-[900px]">
+          <table className="w-full min-w-225">
             <thead className="border-b bg-gray-50 dark:bg-slate-800">
               <tr>
                 <th className="px-6 py-4 text-left">Product</th>
@@ -75,6 +75,7 @@ const Reservations = () => {
                     Loading reservations...
                   </td>
                 </tr>
+                // <div className="py-12 text-center">Loading Reservationa...</div>
               ) : reservations.length === 0 ? (
                 <tr>
                   <td colSpan={5} className="py-12 text-center text-gray-500">

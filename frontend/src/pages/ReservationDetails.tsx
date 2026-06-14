@@ -7,7 +7,7 @@ import type { Reservation } from "../types/reservation";
 import useTimer from "../hooks/useTimer";
 import { ClipLoader } from "react-spinners";
 import { toast } from "react-toastify";
-import BackButton from "../components/common/BackButton";
+// import BackButton from "../components/common/BackButton";
 
 
 const ReservationDetails = () => {

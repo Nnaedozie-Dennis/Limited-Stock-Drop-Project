@@ -130,38 +130,28 @@
 //   });
 // };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-import { Request, Response } from "express";
+// import { Request, Response } from "express";
 import { supabase } from "../config/supabase";
+import { Request, Response } from "express";
 
-export const createReservation = async (req: Request, res: Response) => {
+interface AuthRequest extends Request {
+  user?: {
+    id: string;
+    email?: string;
+  };
+}
+
+export const createReservation = async (req: AuthRequest, res: Response) => {
+  // export const createReservation = async (req: any, res: any) => {
   try {
     const { productId, quantity } = req.body;
+    const userId = req.user?.id;
 
     const { data: product, error: productError } = await supabase
       .from("products")
       .select("*")
       .eq("id", productId)
-      
+
       .single();
 
     if (productError || !product) {
@@ -197,6 +187,7 @@ export const createReservation = async (req: Request, res: Response) => {
     const { data: reservation, error: reservationError } = await supabase
       .from("reservations")
       .insert({
+        user_id: userId,
         product_id: productId,
         quantity,
         status: "PENDING",
@@ -226,8 +217,11 @@ export const createReservation = async (req: Request, res: Response) => {
   }
 };
 
-export const getReservationById = async (req: Request, res: Response) => {
+// export const getReservationById = async (req: Request, res: Response) => {
+// export const getReservationById = async (req: any, res: any) => {
+export const getReservationById = async (req: AuthRequest, res: Response) => {
   const { id } = req.params;
+  const userId = req.user?.id;
 
   const { data, error } = await supabase
     .from("reservations")
@@ -238,7 +232,7 @@ export const getReservationById = async (req: Request, res: Response) => {
     `,
     )
     .eq("id", id)
-    // .eq("user_id", req.user.id)
+    .eq("user_id", userId)
     .single();
 
   if (error) {
@@ -254,7 +248,11 @@ export const getReservationById = async (req: Request, res: Response) => {
   });
 };
 
-export const getReservations = async (req: Request, res: Response) => {
+// export const getReservations = async (req: Request, res: Response) => {
+// export const getReservations = async (req: any, res: any) => {
+export const getReservations = async (req: AuthRequest, res: Response) => {
+  const userId = req.user?.id;
+
   const { data, error } = await supabase
     .from("reservations")
     .select(
@@ -267,6 +265,7 @@ export const getReservations = async (req: Request, res: Response) => {
       )
     `,
     )
+    .eq("user_id", userId)
     .order("created_at", {
       ascending: false,
     });

@@ -3,9 +3,12 @@ import { useEffect, useState } from "react";
 import { supabase } from "../../lib/supabase";
 import { useAuth } from "../../context/AuthContext";
 // import type { ChangeEvent } from "react";
+import { toast } from "react-toastify";
+
 
 const Profile = () => {
   const { user } = useAuth();
+  const [saving, setSaving] = useState(false);
 
   const [profile, setProfile] = useState({
     full_name: "",
@@ -41,24 +44,32 @@ const Profile = () => {
 const saveProfile = async () => {
   if (!user) return;
 
-  const { data, error } = await supabase
-    .from("profiles")
-    .update({
-      full_name: profile.full_name,
-      phone: profile.phone,
-      address: profile.address,
-    })
-    .eq("id", user.id)
-    .select()
-    .single();
+  setSaving(true);
 
-  if (error) {
-    console.log(error.message);
-    return;
+  try {
+    const { data, error } = await supabase
+      .from("profiles")
+      .update({
+        full_name: profile.full_name,
+        phone: profile.phone,
+        address: profile.address,
+      })
+      .eq("id", user.id)
+      .select()
+      .single();
+
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+
+    setProfile(data);
+    toast.success("Profile updated successfully");
+  } catch (error: any) {
+    toast.error(error.message);
+  } finally {
+    setSaving(false);
   }
-
-  setProfile(data);
-  alert("Profile updated");
 };
 
 const uploadAvatar = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -79,7 +90,7 @@ const uploadAvatar = async (event: React.ChangeEvent<HTMLInputElement>) => {
     console.log(fileName);
 
   if (error) {
-    console.log(error.message);
+    toast.error(error.message);
     return;
   }
 
@@ -205,10 +216,11 @@ const uploadAvatar = async (event: React.ChangeEvent<HTMLInputElement>) => {
         </div>
 
         <button
+          disabled={saving}
           onClick={saveProfile}
           className="mt-8 rounded-full bg-black px-8 py-4 text-white transition hover:opacity-90 dark:bg-white dark:text-black cursor-pointer"
         >
-          Save Changes
+          {saving ? "Saving..." : "Save Changes"}
         </button>
       </div>
     </>

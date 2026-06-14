@@ -41,13 +41,6 @@ const Register = () => {
     return;
   }
   
-  if (data.user) {
-    await supabase.from("profiles").insert({
-    id: data.user.id,
-    email,
-    full_name: fullName,
-  });
-}
   toast.success("Account created successfully");
   setLoading(false);
   navigate("/login");

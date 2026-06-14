@@ -27,6 +27,7 @@ export const checkoutReservation = async (req: any, res: any) => {
     .from("orders")
     .insert([
       {
+        user_id: req.user.id,
         reservation_id: reservation.id,
         quantity: reservation.quantity,
         status: "COMPLETED",
@@ -73,6 +74,7 @@ export const getOrders = async (req: any, res: any) => {
       )
     `,
     )
+    .eq("user_id", req.user.id)
     .order("created_at", { ascending: false });
 
   if (error) {
