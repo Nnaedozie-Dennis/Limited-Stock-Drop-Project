@@ -1,6 +1,7 @@
 import { ShoppingBag, Clock3, Wallet, Heart, ArrowUpRight } from "lucide-react";
 import { useEffect, useState } from "react";
 import { api } from "../../services/api";
+// import { useAuth } from "../../context/AuthContext";
 
 
 
@@ -13,6 +14,12 @@ interface DashboardStats {
 
 
 const DashboardHome = () => {
+
+  // const { user } = useAuth();
+
+  // console.log(user);
+  // console.log(user?.profile?.is_admin);
+
     const [stats, setStats] = useState<DashboardStats | null>(null);
 
     const [loading, setLoading] = useState(true);

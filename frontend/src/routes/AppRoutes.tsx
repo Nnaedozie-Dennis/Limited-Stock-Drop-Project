@@ -20,15 +20,13 @@ import ProtectedRoute from "./ProtectedRoute";
 import ResetPassword from "../pages/ResetPassword";
 
 
-
-
-
-// import AdminLayout from "../layouts/AdminLayout";
-// import AdminDashboard from "../pages/admin/AdminDashboard";
-// import AdminProducts from "../pages/admin/AdminProducts";
-// import AdminOrders from "../pages/admin/AdminOrders";
-// import AdminReservations from "../pages/admin/AdminReservations";
-// import AdminUsers from "../pages/admin/AdminUsers";
+import AdminLayout from "../layouts/AdminLayout";
+import AdminDashboard from "../pages/admin/AdminDashboard";
+import AdminProducts from "../pages/admin/AdminProducts";
+import AdminOrders from "../pages/admin/AdminOrders";
+import AdminReservations from "../pages/admin/AdminReservations";
+import AdminUsers from "../pages/admin/AdminUsers";
+import AdminRoute from "./AdminRoute";
 
 
 const AppRoutes = () => {
@@ -72,7 +70,16 @@ const AppRoutes = () => {
         <Route path="profile" element={<Profile />} />
       </Route>
 
-      {/* <Route path="/admin" element={<AdminLayout />}>
+      <Route
+        path="/admin"
+        element={
+          <ProtectedRoute>
+            <AdminRoute>
+              <AdminLayout />
+            </AdminRoute>
+          </ProtectedRoute>
+        }
+      >
         <Route index element={<AdminDashboard />} />
 
         <Route path="products" element={<AdminProducts />} />
@@ -82,7 +89,7 @@ const AppRoutes = () => {
         <Route path="reservations" element={<AdminReservations />} />
 
         <Route path="users" element={<AdminUsers />} />
-      </Route> */}
+      </Route>
     </Routes>
   );
 };
