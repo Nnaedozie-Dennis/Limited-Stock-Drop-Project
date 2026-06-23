@@ -1,18 +1,12 @@
 import { Router } from "express";
+import { requireAuth } from "../middleware/auth";
 import {
-  getProducts,
-  getProductById,
   createProduct,
   updateProduct,
   deleteProduct,
-} from "../controllers/product.controller";
-import { requireAuth } from "../middleware/auth";
-
+} from "../controllers/admin.product.controller";
 
 const router = Router();
-
-router.get("/", requireAuth, getProducts);
-router.get("/:id", requireAuth, getProductById);
 
 router.post("/", requireAuth, createProduct);
 router.put("/:id", requireAuth, updateProduct);

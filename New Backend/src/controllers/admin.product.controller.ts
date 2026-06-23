@@ -1,71 +1,8 @@
-import { Request, Response } from "express";
 import { supabase } from "../config/supabase";
 
-
-export const getProducts = async (req: Request, res: Response) => {
-  try {
-    const page = Number(req.query.page) || 1;
-    const limit = Number(req.query.limit) || 10;
-
-    const start = (page - 1) * limit;
-    const end = start + limit - 1;
-
-    const { data, error, count } = await supabase
-      .from("products")
-      .select("*", { count: "exact" })
-      .order("created_at", { ascending: false })
-      .range(start, end);
-
-    if (error) {
-      return res.status(500).json({
-        success: false,
-        message: error.message,
-      });
-    }
-
-    return res.status(200).json({
-      success: true,
-      products: data,
-      pagination: {
-        page,
-        limit,
-        total: count,
-        totalPages: Math.ceil((count || 0) / limit),
-      },
-    });
-  } catch (error) {
-    return res.status(500).json({
-      success: false,
-      message: "Internal server error",
-    });
-  }
-};
-
-export const getProductById = async (req: any, res: any) => {
-  const { id } = req.params;
-
-  const { data, error } = await supabase
-    .from("products")
-    .select("*")
-    .eq("id", id)
-    .single();
-
-  if (error) {
-    return res.status(404).json({
-      success: false,
-      message: "Product not found",
-    });
-  }
-
-  return res.json({
-    success: true,
-    product: data,
-  });
-};
-
-
-// CREATE PRODUCT
+// CREATE createProduct
 export const createProduct = async (req: any, res: any) => {
+  // console.log(req.body);
   try {
     const { name, description, brand, price, image_url, stock } = req.body;
 
@@ -73,9 +10,9 @@ export const createProduct = async (req: any, res: any) => {
       .from("products")
       .insert({
         name,
+        price,
         description,
         brand,
-        price,
         image_url,
         stock,
       })
@@ -101,12 +38,11 @@ export const createProduct = async (req: any, res: any) => {
   }
 };
 
-
-// UPDATE PRODUCT
+// Update Product
 export const updateProduct = async (req: any, res: any) => {
+  // console.log(req.body);
   try {
     const { id } = req.params;
-
     const { name, description, brand, price, image_url, stock } = req.body;
 
     const { data, error } = await supabase
@@ -142,16 +78,12 @@ export const updateProduct = async (req: any, res: any) => {
   }
 };
 
-
-// DELETE PRODUCT
+// Delete Product
 export const deleteProduct = async (req: any, res: any) => {
   try {
     const { id } = req.params;
 
-    const { error } = await supabase
-      .from("products")
-      .delete()
-      .eq("id", id);
+    const { error } = await supabase.from("products").delete().eq("id", id);
 
     if (error) {
       return res.status(500).json({
@@ -171,6 +103,3 @@ export const deleteProduct = async (req: any, res: any) => {
     });
   }
 };
-
-
-

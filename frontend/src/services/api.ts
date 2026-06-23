@@ -11,7 +11,7 @@ api.interceptors.request.use(async (config) => {
     data: { session },
   } = await supabase.auth.getSession();
 
-   const token = session?.access_token;
+  const token = session?.access_token;
 
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;

@@ -10,6 +10,9 @@ import orderRoutes from "./routes/order.routes";
 import { expireReservationsJob } from "./jobs/expireReservations";
 import dashboardRoutes from "./routes/dashboard.routes";
 import adminRoutes from "./routes/admin.routes";
+import adminProductRoutes from "./routes/admin.product.routes";
+
+
 
 const app = express();
 
@@ -34,6 +37,7 @@ app.use("/api/reservations", reservationRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/admin", adminRoutes);
+app.use("/api/admin/products", adminProductRoutes);
 
 
 setInterval(() => {
