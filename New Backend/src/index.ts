@@ -11,7 +11,7 @@ import { expireReservationsJob } from "./jobs/expireReservations";
 import dashboardRoutes from "./routes/dashboard.routes";
 import adminRoutes from "./routes/admin.routes";
 import adminProductRoutes from "./routes/admin.product.routes";
-
+import adminOrderRoutes from "./routes/admin.order.routes";
 
 
 const app = express();
@@ -38,7 +38,7 @@ app.use("/api/orders", orderRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/admin/products", adminProductRoutes);
-
+app.use("/api/admin/orders", adminOrderRoutes);
 
 setInterval(() => {
   expireReservationsJob();

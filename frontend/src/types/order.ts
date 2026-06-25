@@ -12,4 +12,7 @@ export interface Order {
       image_url: string;
     };
   };
+  profiles?: {
+    email: string;
+  };
 }

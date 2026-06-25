@@ -5,7 +5,16 @@ export const checkoutReservation = async (req: any, res: any) => {
 
   const { data: reservation } = await supabase
     .from("reservations")
-    .select("*")
+    .select(
+      `
+    *,
+    products (
+      name,
+      price,
+      image_url
+    )
+  `,
+    )
     .eq("id", reservationId)
     .single();
 
@@ -29,6 +38,11 @@ export const checkoutReservation = async (req: any, res: any) => {
       {
         user_id: req.user.id,
         reservation_id: reservation.id,
+
+        // product_name: reservation.products.name,
+        // product_price: reservation.products.price,
+        // product_image: reservation.products.image_url,
+
         quantity: reservation.quantity,
         status: "COMPLETED",
       },
@@ -58,7 +72,6 @@ export const checkoutReservation = async (req: any, res: any) => {
 };
 
 export const getOrders = async (req: any, res: any) => {
-
   const { data, error } = await supabase
     .from("orders")
     .select(
@@ -112,3 +125,41 @@ export const getOrderById = async (req: any, res: any) => {
     orders: data,
   });
 };
+
+export const getAdminOrders = async (req: any, res: any) => {
+  const { data, error } = await supabase
+    .from("orders")
+    .select(
+      `
+      *,
+      profiles!user_id (
+        full_name,
+        email
+      ),
+      reservations (
+        quantity,
+        products (
+          name,
+          image_url,
+          price
+        )
+      )
+    `,
+    )
+    .order("created_at", { ascending: false });
+
+    console.log(error);
+
+  if (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+
+  return res.json({
+    success: true,
+    orders: data,
+  });
+};
+
