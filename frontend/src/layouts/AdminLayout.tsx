@@ -61,13 +61,6 @@ const AdminLayout = () => {
           </NavLink>
 
           <NavLink
-            to="/admin/orders"
-            className="block rounded-lg p-3 hover:bg-gray-100 hover:text-black"
-          >
-            Orders
-          </NavLink>
-
-          <NavLink
             to="/admin/reservations"
             className="block rounded-lg p-3 hover:bg-gray-100 hover:text-black"
           >
@@ -75,11 +68,26 @@ const AdminLayout = () => {
           </NavLink>
 
           <NavLink
+            to="/admin/orders"
+            className="block rounded-lg p-3 hover:bg-gray-100 hover:text-black"
+          >
+            Orders
+          </NavLink>
+
+
+          <NavLink
             to="/admin/users"
             className="block rounded-lg p-3 hover:bg-gray-100 hover:text-black"
           >
             Users
           </NavLink>
+
+          <NavLink
+          to="/admin/logs"
+          className="block rounded-lg p-3 hover:bg-gray-100 hover:text-black"
+        >
+          Inventory Logs
+        </NavLink>
         </nav>
       </aside>
 

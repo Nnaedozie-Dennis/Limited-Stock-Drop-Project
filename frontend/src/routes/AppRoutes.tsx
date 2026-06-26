@@ -26,6 +26,8 @@ import AdminProducts from "../pages/admin/AdminProducts";
 import AdminOrders from "../pages/admin/AdminOrders";
 import AdminReservations from "../pages/admin/AdminReservations";
 import AdminUsers from "../pages/admin/AdminUsers";
+import AdminLogs from "../pages/admin/AdminLogs";
+
 import AdminRoute from "./AdminRoute";
 
 
@@ -62,11 +64,8 @@ const AppRoutes = () => {
         }
       >
         <Route index element={<DashboardHome />} />
-
         <Route path="reservations" element={<Reservations />} />
-
         <Route path="orders" element={<Orders />} />
-
         <Route path="profile" element={<Profile />} />
       </Route>
 
@@ -81,14 +80,11 @@ const AppRoutes = () => {
         }
       >
         <Route index element={<AdminDashboard />} />
-
         <Route path="products" element={<AdminProducts />} />
-
         <Route path="orders" element={<AdminOrders />} />
-
         <Route path="reservations" element={<AdminReservations />} />
-
         <Route path="users" element={<AdminUsers />} />
+        <Route path="logs" element={<AdminLogs />} />
       </Route>
     </Routes>
   );

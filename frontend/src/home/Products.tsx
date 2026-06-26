@@ -26,7 +26,7 @@ const Products = () => {
   }, []);
 
   const featuredProducts = products.filter((product) =>
-    ["Nike Dunk Low Panda",  "New Balance 550"].includes(
+    ["Nike Dunk Low Panda",  "New Balance 550", "Nike Air Max Plus"].includes(
       product.name,
     ),
   );
